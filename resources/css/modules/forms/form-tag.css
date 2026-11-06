@@ -1,0 +1,192 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Form Container Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering the wrapper `<form>` element for User Interface (UI) components.
+ * WHY:  Provides clean structural reset, flexbox/grid layout handling, spacing, and
+ *       design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/components/form-container.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES:
+ * Pass layout modifier classes or custom variant names down via the `inputClass` attribute:
+ *
+ * Example 1: Standard fluid form container
+ * <x-form.form-field type="form" name="login_form" inputClass="pf-input">
+ *     <!-- Form child elements go into slot -->
+ * </x-form.form-field>
+ *
+ * Example 2: Boxed card form container using component modifier
+ * <x-form.form-field type="form" name="registration_form" inputClass="pf-input pf-card">
+ *     <!-- Form child elements go into slot -->
+ * </x-form.form-field>
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pf-form-gap: 1.5rem;
+ *     --pf-border-radius: 0.5rem;
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pf: Project Form (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HTML: HyperText Markup Language
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update padding, gap, or border variables inside the
+ *    `@layer pf-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW FORM MODIFIERS: Add your new modifier classes (e.g., inline forms, grid forms)
+ *    right inside the `@layer pf-components` section below.
+ * =============================================================================
+ */
+
+/*
+  =============================================================================
+  CASCADE LAYER DECLARATION
+  WHAT: Establishes clear cascade boundaries for the form container module (CSS Cascading Style Sheets Layers).
+  WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+  WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+  ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pf: Project Form
+  =============================================================================
+*/
+@layer pf-tokens, pf-base, pf-components, pf-utilities;
+
+/*
+  =============================================================================
+  WHAT: Global Design Tokens (Theme Variables)
+  WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as container spacing, gaps, border radii,
+                  and background colors. They act as the single source of truth
+                  for the entire form layout structure across 10,000+ projects.
+  WHEN: Evaluated when forms calculate structural spacing, inner padding, and grid gaps.
+  WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+  ABBREVIATIONS EXPANSION:
+    - pf: Project Form (Prefix for design tokens)
+    - rem: Root Em (Relative typography/spacing unit)
+    - HEX: Hexadecimal (Color notation format)
+  HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pf-form-gap: 1.5rem;      // Wider spacing between form fields
+          --pf-form-padding: 2rem;    // Box padding for form cards
+        }
+  =============================================================================
+*/
+@layer pf-tokens {
+    :root {
+        --pf-form-gap: 1rem; /* rem = Root Em unit */
+        --pf-form-padding: 0rem; /* Default clean slate padding */
+        --pf-form-max-width: 100%; /* Full fluid width by default */
+        --pf-border-radius: 0.375rem; /* rem = Root Em unit */
+        --pf-border-color: #e5e7eb; /* HEX = Hexadecimal color code */
+        --pf-bg-color: transparent;
+    }
+}
+
+/*
+  =============================================================================
+  WHAT: Base Form Layout Reset
+  WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+                (in this case, the standard `<form>` element). It applies foundational layout rules,
+                box-sizing, block display, and vertical flex column flow so that child inputs
+                stack cleanly out-of-the-box.
+  WHEN: Applied to standard `<form>` tags rendered by the Blade component case block in HTML (HyperText Markup Language).
+  WHY:  Ensures consistent box-sizing and structural flow across different browser engines.
+  ABBREVIATIONS EXPANSION:
+    - pf: Project Form
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+  =============================================================================
+*/
+@layer pf-base {
+    form {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: var(--pf-form-gap);
+        max-width: var(--pf-form-max-width);
+        width: 100%;
+        margin: 0;
+        padding: var(--pf-form-padding);
+        background-color: var(--pf-bg-color);
+    }
+}
+
+/*
+  =============================================================================
+  WHAT: Component Modifiers and State Enhancements
+  WHAT IS COMPONENTS: Components encapsulate specific UI layout patterns, modifier classes, and structural variations
+                      (such as `.pf-card` for boxed container forms, `.pf-inline` for horizontal layouts, and
+                      `.pf-grid` for multi-column form layouts). This layer builds specific, reusable UI features
+                      on top of the foundational base rules.
+  WHEN: Applied when the form element possesses specific modifier classes passed via `$inputClass`.
+  WHY:  Provides flexible layout structures for varied form contexts across 10,000 projects.
+  ABBREVIATIONS EXPANSION:
+    - pf: Project Form
+    - UI: User Interface
+    - rem: Root Em
+  -----------------------------------------------------------------------------
+  FUTURE MODIFICATION INSTRUCTION (ADDING NEW CODE):
+  To add custom form layouts (e.g., a multi-step wizard form or grid container), insert
+  your selector rule here inside `@layer pf-components`. For example:
+
+  .pf-wizard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+  }
+  =============================================================================
+*/
+@layer pf-components {
+    /* Boxed Card Form Variant */
+    form.pf-card {
+        padding: 1.5rem; /* rem = Root Em */
+        background-color: #ffffff;
+        border: 1px solid var(--pf-border-color);
+        border-radius: var(--pf-border-radius);
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    /* Inline Horizontal Form Variant */
+    form.pf-inline {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 0.75rem; /* rem = Root Em */
+    }
+
+    /* Two-Column Grid Form Variant */
+    form.pf-grid-2col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--pf-form-gap);
+    }
+}
+
+/*
+  =============================================================================
+  WHAT: Utility Overrides
+  WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pf-shadow-none`)
+                     designed to accomplish one exact job. Because utilities sit at the very end of the cascade layer order,
+                     they carry ultimate override priority when applied to a form element.
+  WHEN: Emergency style overrides or helper utility applications on form elements.
+  WHY:  Guarantees high-priority application for utility display and spacing helper classes.
+  ABBREVIATIONS EXPANSION:
+    - pf: Project Form
+    - px: Pixels
+  =============================================================================
+*/
+@layer pf-utilities {
+    .pf-shadow-none {
+        box-shadow: none !important;
+    }
+    .pf-m-0 {
+        margin: 0 !important;
+    }
+}

@@ -1,0 +1,232 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Date and Datetime Input Control Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering date and datetime-local picker input elements for User Interface (UI) components.
+ * WHY:  Provides clean typography, padding, focus rings, calendar indicator alignment, and
+ *       design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/components/date-field.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES:
+ * Render date or datetime-local inputs automatically via the universal anonymous form component or attach classes:
+ *
+ * Example 1: Standard component call rendering date input automatically
+ * <x-form.form-field type="date" name="birth_date" label="Date of Birth" />
+ *
+ * Example 2: Attaching datetime-local type and custom modifier classes via inputClass
+ * <x-form.form-field type="datetime-local" name="appointment_at" label="Appointment Time" inputClass="pdt-input pdt-pill" />
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pdt-border-color: #6366f1;   // Custom indigo border color
+ *     --pdt-border-radius: 0.5rem;   // Smoother rounded corners
+ *     --pdt-focus-ring: rgba(99, 102, 241, 0.25); // Custom indigo focus shadow
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pdt: Project Date Time (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - RGB / RGBA: Red Green Blue Alpha (Color notation format)
+ *    - HTML: HyperText Markup Language
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update typography, spacing, or color variables inside the
+ *    `@layer pdt-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW DATE INPUT MODIFIERS: Add your new modifier classes (e.g., custom calendar icon styling,
+ *    pill-shaped date boxes) right inside the `@layer pdt-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the date and datetime input module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pdt: Project Date Time
+ =============================================================================
+*/
+@layer pdt-tokens, pdt-base, pdt-components, pdt-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as background colors, border colors, focus ring shadows,
+                  typography fonts, padding, and height dimensions. They act as the single source of truth
+                  for the entire date and datetime component layout across 10,000+ projects.
+ WHEN: Evaluated when date and datetime input elements calculate box dimensions, borders, and interaction states.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - pdt: Project Date Time (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+    - RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pdt-border-color: #3b82f6; // Custom primary blue for Project A
+          --pdt-border-radius: 0.5rem; // Custom rounded corners
+        }
+ =============================================================================
+*/
+@layer pdt-tokens {
+    :root {
+        --pdt-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --pdt-font-size: 0.875rem; /* rem = Root Em */
+        --pdt-line-height: 1.5;
+        --pdt-color-text: #1f2937; /* HEX = Hexadecimal color code */
+        --pdt-color-bg: #ffffff;
+        --pdt-border-color: #d1d5db;
+        --pdt-border-color-hover: #9ca3af;
+        --pdt-color-placeholder: #9ca3af;
+        --pdt-color-disabled: #f3f4f6;
+        --pdt-focus-ring: rgba(
+            59,
+            130,
+            246,
+            0.25
+        ); /* RGBA = Red Green Blue Alpha shadow */
+        --pdt-border-radius: 0.375rem; /* rem = Root Em */
+        --pdt-padding-y: 0.5rem;
+        --pdt-padding-x: 0.75rem;
+        --pdt-transition:
+            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Date and Datetime Input Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, `<input type="date">` and `<input type="datetime-local">` elements). It applies foundational layout rules,
+               box-sizing, full-width block display, typography inheritance, and links design tokens
+               directly to native elements so that every date picker looks polished out-of-the-box.
+ WHEN: Applied to standard date/datetime tags rendered by the Blade component switch-case blocks in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, sizing scale, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - pdt: Project Date Time
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer pdt-base {
+    input[type="date"],
+    input[type="datetime-local"] {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        padding: var(--pdt-padding-y) var(--pdt-padding-x);
+        font-family: var(--pdt-font-family);
+        font-size: var(--pdt-font-size);
+        line-height: var(--pdt-line-height);
+        color: var(--pdt-color-text);
+        background-color: var(--pdt-color-bg);
+        border: 1px solid var(--pdt-border-color);
+        border-radius: var(--pdt-border-radius);
+        transition: var(--pdt-transition);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, modifier classes, and dynamic interaction states
+                     (such as `:focus` rings, `:disabled` states, placeholder/calendar styling, and layout variants
+                     like `.pdt-pill`). This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when date and datetime inputs possess specific interactive states, attributes, or companion classes.
+ WHY:  Provides interactive feedback, accessibility, calendar picker alignment, and visual variation across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - pdt: Project Date Time
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSTRUCTION (ADDING NEW CODE):
+ To add custom date input behavior or variants (e.g., custom calendar icon padding or floating labels),
+ insert your selector rule here inside `@layer pdt-components`. For example:
+
+ .pdt-calendar-custom {
+     // Add custom calendar picker indicator styles here
+ }
+ =============================================================================
+*/
+@layer pdt-components {
+    /* Placeholder Text Styling */
+    input[type="date"]::placeholder,
+    input[type="datetime-local"]::placeholder {
+        color: var(--pdt-color-placeholder);
+        opacity: 1;
+    }
+
+    /* Hover State Enhancement */
+    input[type="date"]:hover,
+    input[type="datetime-local"]:hover {
+        border-color: var(--pdt-border-color-hover);
+    }
+
+    /* Focus State & Accessibility Ring */
+    input[type="date"]:focus,
+    input[type="datetime-local"]:focus {
+        outline: none;
+        border-color: var(--pdt-border-color);
+        box-shadow: 0 0 0 3px var(--pdt-focus-ring);
+    }
+
+    /* Disabled State Styling */
+    input[type="date"]:disabled,
+    input[type="datetime-local"]:disabled {
+        background-color: var(--pdt-color-disabled);
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    /* Modifier Variant: Fully Rounded Pill-Shaped Date Input */
+    input[type="date"].pdt-pill,
+    input[type="datetime-local"].pdt-pill {
+        border-radius: 9999px; /* px = Pixels for full rounded pill shape */
+        padding-left: 1rem; /* rem = Root Em */
+        padding-right: 1rem;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pdt-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - pdt: Project Date Time
+    - sr: Screen Reader (`.pdt-sr-only` = Project Date Time Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer pdt-utilities {
+    .pdt-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
