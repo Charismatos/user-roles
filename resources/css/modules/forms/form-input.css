@@ -1,0 +1,243 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Default / Text Input Control Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering standard text-based input elements (`<input type="text">`,
+ *       `<input type="password">`, `<input type="number">`, `<input type="tel">`, etc.) for User Interface (UI) components.
+ * WHY:  Provides clean typography, padding, focus rings, hover borders, state management, and
+ *       design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/components/default-field.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES:
+ * Render standard default inputs automatically via the universal anonymous form component or attach classes:
+ *
+ * Example 1: Standard component call rendering text input automatically
+ * <x-form.form-field type="text" name="username" label="Username" placeholder="Enter username..." />
+ *
+ * Example 2: Attaching custom modifier classes via inputClass for pill styling or shadow variants
+ * <x-form.form-field type="password" name="password" label="Password" inputClass="pdef-input pdef-pill pdef-shadow" />
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pdef-border-color: #6366f1;   // Custom indigo border color
+ *     --pdef-border-radius: 0.5rem;   // Smoother rounded corners
+ *     --pdef-focus-ring: rgba(99, 102, 241, 0.25); // Custom indigo focus shadow
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pdef: Project Default (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - RGB / RGBA: Red Green Blue Alpha (Color notation format)
+ *    - HTML: HyperText Markup Language
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update typography, spacing, or color variables inside the
+ *    `@layer pdef-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW DEFAULT INPUT MODIFIERS: Add your new modifier classes (e.g., input icons,
+ *    success/error validation states, floating labels) right inside the `@layer pdef-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the default input module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pdef: Project Default
+ =============================================================================
+*/
+@layer pdef-tokens, pdef-base, pdef-components, pdef-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as background colors, border colors, focus ring shadows,
+                  typography fonts, padding, and height dimensions. They act as the single source of truth
+                  for the entire default input component layout across 10,000+ projects.
+ WHEN: Evaluated when default input elements calculate box dimensions, borders, and interaction states.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - pdef: Project Default (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+    - RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pdef-border-color: #3b82f6; // Custom primary blue for Project A
+          --pdef-border-radius: 0.5rem; // Custom rounded corners
+        }
+ =============================================================================
+*/
+@layer pdef-tokens {
+    :root {
+        --pdef-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --pdef-font-size: 0.875rem; /* rem = Root Em */
+        --pdef-line-height: 1.5;
+        --pdef-color-text: #1f2937; /* HEX = Hexadecimal color code */
+        --pdef-color-bg: #ffffff;
+        --pdef-border-color: #d1d5db;
+        --pdef-border-color-hover: #9ca3af;
+        --pdef-color-placeholder: #9ca3af;
+        --pdef-color-disabled: #f3f4f6;
+        --pdef-focus-ring: rgba(
+            59,
+            130,
+            246,
+            0.25
+        ); /* RGBA = Red Green Blue Alpha shadow */
+        --pdef-border-radius: 0.375rem; /* rem = Root Em */
+        --pdef-padding-y: 0.5rem;
+        --pdef-padding-x: 0.75rem;
+        --pdef-transition:
+            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Default Input Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, standard `<input>` elements falling through the default switch case).
+               It applies foundational layout rules, box-sizing, full-width block display, typography inheritance,
+               and links design tokens directly to native elements so that every text input looks polished out-of-the-box.
+ WHEN: Applied to standard default input tags rendered by the Blade component switch-case default block in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, sizing scale, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - pdef: Project Default
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer pdef-base {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+            [type="image"]
+        ):not([type="hidden"]) {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        padding: var(--pdef-padding-y) var(--pdef-padding-x);
+        font-family: var(--pdef-font-family);
+        font-size: var(--pdef-font-size);
+        line-height: var(--pdef-line-height);
+        color: var(--pdef-color-text);
+        background-color: var(--pdef-color-bg);
+        border: 1px solid var(--pdef-border-color);
+        border-radius: var(--pdef-border-radius);
+        transition: var(--pdef-transition);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, modifier classes, and dynamic interaction states
+                     (such as `:focus` rings, `:disabled` states, placeholder styling, validation states, and layout variants
+                     like `.pdef-pill` or `.pdef-shadow`). This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when default inputs possess specific interactive states, attributes, or companion classes.
+ WHY:  Provides interactive feedback, accessibility, and visual variation across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - pdef: Project Default
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSSTRUCTION (ADDING NEW CODE):
+ To add custom default input behavior or variants (e.g., error validation borders or input icons),
+ insert your selector rule here inside `@layer pdef-components`. For example:
+
+ .pdef-error {
+     border-color: #ef4444;
+     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+ }
+ =============================================================================
+*/
+@layer pdef-components {
+    /* Placeholder Text Styling */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+            [type="image"]
+        ):not([type="hidden"])::placeholder {
+        color: var(--pdef-color-placeholder);
+        opacity: 1;
+    }
+
+    /* Hover State Enhancement */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+            [type="image"]
+        ):not([type="hidden"]):hover {
+        border-color: var(--pdef-border-color-hover);
+    }
+
+    /* Focus State & Accessibility Ring */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+            [type="image"]
+        ):not([type="hidden"]):focus {
+        outline: none;
+        border-color: var(--pdef-border-color);
+        box-shadow: 0 0 0 3px var(--pdef-focus-ring);
+    }
+
+    /* Disabled State Styling */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(
+            [type="image"]
+        ):not([type="hidden"]):disabled {
+        background-color: var(--pdef-color-disabled);
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    /* Modifier Variant: Pill-Shaped Rounded Input Style */
+    input.pdef-pill {
+        border-radius: 9999px; /* px = Pixels for full rounded pill shape */
+        padding-left: 1rem; /* rem = Root Em */
+        padding-right: 1rem;
+    }
+
+    /* Modifier Variant: Subtle Box Shadow Style */
+    input.pdef-shadow {
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pdef-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - pdef: Project Default
+    - sr: Screen Reader (`.pdef-sr-only` = Project Default Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer pdef-utilities {
+    .pdef-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
