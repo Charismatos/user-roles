@@ -1,0 +1,296 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Anchor Link Component Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering navigation hyperlinks (`<a>` tags, icons, target hooks,
+ *       and interactive states) for User Interface (UI) components across 10,000+ Laravel projects.
+ * WHY:  Provides clean typography text decoration resets, hover/focus transitions, semantic link variant color themes
+ *       (default primary, underline states, focus ring styling), border radii, padding,
+ *       and design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/components/links/link.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES AND PASS VALUES:
+ * Render link elements automatically via the universal link component and pass variants or custom props:
+ *
+ * Example 1: Basic standard link call
+ * <x-links.link href="{{ route('home') }}" label="Home" class="pl-link pl-default" />
+ *
+ * Example 2: Separate real-world usage examples covering all component custom props:
+ *
+ * - (href & target): Opening external documentation in a new tab
+ * <x-links.link href="https://docs.jukunafinancial.com" label="API Documentation" target="_blank" class="pl-link pl-primary" />
+ *
+ * - (download): Triggering file downloads directly
+ * <x-links.link href="/storage/reports/annual-2026.pdf" label="Download Annual Report" download="Annual_Report_2026.pdf" class="pl-link pl-default" />
+ *
+ * - (hreflang): Specifying language metadata for translated documents
+ * <x-links.link href="{{ route('fr.welcome') }}" label="Lire en Français" hreflang="fr" class="pl-link pl-default" />
+ *
+ * - (media): Responsive links tailored to specific device viewports
+ * <x-links.link href="{{ route('mobile.app') }}" label="Download Mobile App Version" media="(max-width: 768px)" class="pl-link pl-default" />
+ *
+ * - (ping): Tracking user click analytics via pingback endpoints
+ * <x-links.link href="https://external-partner.com/offer" label="Visit Partner Offer" ping="/api/v1/track-outbound-click?target=partner" class="pl-link pl-default" />
+ *
+ * - (referrerpolicy): Controlling HTTP referrer headers sent upon navigation
+ * <x-links.link href="https://secure.payment-gateway.com" label="Proceed to Secure Checkout" referrerpolicy="no-referrer" class="pl-link pl-default" />
+ *
+ * - (rel): Defining relationship links for security protections
+ * <x-links.link href="https://github.com/Charismatos" label="GitHub Profile" rel="noopener noreferrer" class="pl-link pl-default" />
+ *
+ * - (shape): Image map clickable coordinate regions
+ * <x-links.link href="#section-map" label="Map Hotspot" shape="poly" class="pl-link pl-default" />
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pl-primary-color: #4f46e5;   // Custom indigo primary hyperlink color
+ *     --pl-primary-hover: #4338ca;   // Custom dark indigo hover color
+ *     --pl-font-weight: 600;         // Custom bold typography weight
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pl: Project Link (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - RGB / RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ *    - HTML: HyperText Markup Language
+ *    - ID: Identifier (Unique DOM element anchor)
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update typography font families, semantic link variant colors, or spacing variables inside the
+ *    `@layer pl-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW LINK MODIFIERS: Add your new modifier classes (e.g., button-styled links, pill badges,
+ *    underlined hover animations, external icon indicators) right inside the `@layer pl-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the link module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pl: Project Link
+ =============================================================================
+*/
+@layer pl-tokens, pl-base, pl-components, pl-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as hyperlink text colors, hover colors, focus ring shadows,
+                  typography font families, font sizes, line heights, and transition timings.
+                  They act as the single source of truth for the entire link component layout across 10,000+ projects.
+ WHEN: Evaluated when hyperlink elements calculate text color, underlines, and interaction states.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - pl: Project Link (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+    - RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pl-primary-color: #3b82f6; // Custom primary blue link color for Project A
+          --pl-font-weight: 500;       // Custom font weight
+        }
+ =============================================================================
+*/
+@layer pl-tokens {
+    :root {
+        --pl-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --pl-font-size: 0.875rem; /* rem = Root Em */
+        --pl-font-weight: 500;
+        --pl-line-height: 1.5;
+        --pl-transition:
+            color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+            text-decoration-color 0.15s ease-in-out,
+            box-shadow 0.15s ease-in-out;
+
+        /* Default Link Theme Tokens */
+        --pl-default-color: #374151; /* HEX = Dark gray text color */
+        --pl-default-hover: #111827; /* HEX = Deep black-gray hover color */
+        --pl-default-focus: rgba(
+            156,
+            163,
+            175,
+            0.4
+        ); /* RGBA = Gray focus ring shadow */
+
+        /* Primary Link Theme Tokens */
+        --pl-primary-color: #2563eb; /* HEX = Vibrant blue link color */
+        --pl-primary-hover: #1d4ed8; /* HEX = Darker blue hover color */
+        --pl-primary-focus: rgba(
+            37,
+            99,
+            235,
+            0.4
+        ); /* RGBA = Blue focus ring shadow */
+
+        /* Subtle / Muted Link Theme Tokens */
+        --pl-muted-color: #6b7280; /* HEX = Muted gray text color */
+        --pl-muted-hover: #374151; /* HEX = Darker gray hover color */
+        --pl-muted-focus: rgba(156, 163, 175, 0.4);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Link Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, the `<a>` anchor element). It applies foundational layout rules,
+               box-sizing, text decoration resets, inline-flex alignment, and links design tokens
+               directly to native elements so that every hyperlink looks polished out-of-the-box.
+ WHEN: Applied to standard `<a>` tags rendered by the Blade component in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, typography inheritance, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - pl: Project Link
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer pl-base {
+    a {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem; /* rem = Root Em */
+        text-decoration: none;
+        cursor: pointer;
+        font-family: var(--pl-font-family);
+        font-size: var(--pl-font-size);
+        font-weight: var(--pl-font-weight);
+        line-height: var(--pl-line-height);
+        transition: var(--pl-transition);
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, semantic link variants, icon wrappers,
+                     custom prop hooks (such as handling `href`, `target`, `download`, `rel`, `hreflang`, etc.),
+                     and interactive focus ring states. This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when hyperlink elements possess specific modifier classes passed via `class` or target component props.
+ WHY:  Provides semantic visual variations, data-hub target styling, icon spacing, and accessible focus states across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - pl: Project Link
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSTRUCTION (ADDING NEW CODE):
+ To add custom link variants, handling for new component props, or icon indicator styles (e.g., external link arrow icons),
+ insert your selector rule here inside `@layer pl-components`. For example:
+
+ .pl-external::after {
+     content: " ↗";
+     font-size: 0.75rem;
+ }
+ =============================================================================
+*/
+@layer pl-components {
+    /* Base Link Component Modifier Class */
+    .pl-link {
+        border-radius: 0.25rem; /* rem = Root Em */
+        padding: 0.125rem 0.25rem;
+    }
+
+    /* Variant: Default Link */
+    .pl-default {
+        color: var(--pl-default-color);
+    }
+    .pl-default:hover {
+        color: var(--pl-default-hover);
+    }
+    .pl-default:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-default-focus);
+    }
+
+    /* Variant: Primary Link */
+    .pl-primary {
+        color: var(--pl-primary-color);
+    }
+    .pl-primary:hover {
+        color: var(--pl-primary-hover);
+    }
+    .pl-primary:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-primary-focus);
+    }
+
+    /* Variant: Muted / Subtle Link */
+    .pl-muted {
+        color: var(--pl-muted-color);
+    }
+    .pl-muted:hover {
+        color: var(--pl-muted-hover);
+    }
+    .pl-muted:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-muted-focus);
+    }
+
+    /* Handling for Slot Content / Icon Wrapper Support inside links */
+    a span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Handling for Component Custom Props: [target="_blank"] / [rel] security hooks */
+    a[target="_blank"] {
+        /* Custom styles or indicators for external window links across 10,000+ projects */
+    }
+
+    /* Handling for Component Custom Props: [download] file trigger indicator hooks */
+    a[download] {
+        /* Custom download styling hooks */
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pl-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - pl: Project Link
+    - sr: Screen Reader (`.pl-sr-only` = Project Link Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer pl-utilities {
+    .pl-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}

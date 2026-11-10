@@ -1,19 +1,30 @@
 <?php
 
-namespace App\Http\Requests\Auth\Editor;
+namespace App\Http\Requests\Auth\Guest;
 
 use App\DTOs\Auth\Guest\UserData;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserCreateRequest extends FormRequest
 {
+    protected $errorBag = 'default';
     /**
-     * Determine if the user is authorized to make this request.
+     * Prepare the data and dynamically set the error bag.
      */
-    public function authorize(): bool
+    protected function prepareForValidation(): void
     {
-        return $this->user()?->can('create-users') ?? true;
+        // Check if a custom error bag was passed via request input or route parameters,
+        // otherwise gracefully fall back to Laravel's 'default' error bag.
+        $this->errorBag = $this->input('error_bag') ?? $this->route('error_bag') ?? 'default';
     }
+
+    // /**
+    //  * Determine if the user is authorized to make this request.
+    //  */
+    // public function authorize(): bool
+    // {
+    //     return $this->user()?->can('create-users') ?? true;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -32,7 +43,7 @@ class UserCreateRequest extends FormRequest
                 'nullable',
                 'string',
                 'max:255',
-                'unique:users,username',
+                // 'unique:users,username',
             ],
             'email' => [
                 'required',

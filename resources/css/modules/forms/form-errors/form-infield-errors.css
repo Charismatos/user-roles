@@ -1,0 +1,188 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Per-Field Validation Error Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering inline or field-specific validation error messages (`<div>`, `<span>` elements) for User Interface (UI) components.
+ * WHY:  Provides clean typography, small error font sizing, soft red text tones,
+ *       compact spacing, and design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/modules/forms/form-errors/form-infield-errors.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES:
+ * Render per-field validation error messages automatically via the universal form-infield-errors component or attach classes:
+ *
+ * Example 1: Standard component call rendering field-specific error automatically
+ * <x-form.form-infield-errors name="email" />
+ *
+ * Example 2: Attaching custom modifier classes via wrapperClass for specialized styling
+ * <x-form.form-infield-errors name="password" wrapperClass="pfer-input pfer-error-pill" />
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pfer-color-text: #dc2626;   // Custom dark red error text color
+ *     --pfer-font-size: 0.8125rem;  // Custom smaller font size
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pfer: Project Form Error (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - HTML: HyperText Markup Language
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update typography, text colors, or spacing variables inside the
+ *    `@layer pfer-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW FIELD ERROR MODIFIERS: Add your new modifier classes (e.g., inline warning icons,
+ *    floating tooltips) right inside the `@layer pfer-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the per-field error module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pfer: Project Form Error
+ =============================================================================
+*/
+@layer pfer-tokens, pfer-base, pfer-components, pfer-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as error text colors, typography font families,
+                  font sizes, line heights, and top margin spacing. They act as the single source of truth
+                  for the entire per-field error component layout across 10,000+ projects.
+ WHEN: Evaluated when field-specific error elements calculate typography and spacing.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - pfer: Project Form Error (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pfer-color-text: #ef4444; // Custom error text red for Project A
+          --pfer-font-size: 0.8rem;    // Custom compact font size
+        }
+ =============================================================================
+*/
+@layer pfer-tokens {
+    :root {
+        --pfer-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --pfer-font-size: 0.75rem; /* rem = Root Em (12px equivalent) */
+        --pfer-font-weight: 500;
+        --pfer-line-height: 1.25;
+        --pfer-color-text: #b91c1c; /* HEX = Hexadecimal deep red error text color */
+        --pfer-margin-top: 0.375rem; /* rem = Root Em spacing below input fields */
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Per-Field Error Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, per-field error container `<div>` and inner `<span>` elements). It applies foundational layout rules,
+               box-sizing, block display, and links design tokens directly to native elements
+               so that every per-field error message looks polished and positioned correctly out-of-the-box.
+ WHEN: Applied to standard per-field error blocks rendered by the Blade component check in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent spacing, sizing scale, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - pfer: Project Form Error
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer pfer-base {
+    div:has(> span) {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        margin-top: var(--pfer-margin-top);
+        font-family: var(--pfer-font-family);
+        font-size: var(--pfer-font-size);
+        font-weight: var(--pfer-font-weight);
+        line-height: var(--pfer-line-height);
+        color: var(--pfer-color-text);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, modifier classes, and dynamic layout variants
+                     (such as `.pfer-error-pill` for badge-style error text or `.pfer-inline` for side-by-side error hints).
+                     This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when per-field error containers possess specific modifier classes passed via wrapperClass.
+ WHY:  Provides visual variation and styling flexibility for inline error messages across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - pfer: Project Form Error
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSСТRUCTION (ADDING NEW CODE):
+ To add custom field error behavior or variants (e.g., inline warning icons or tooltip styles),
+ insert your selector rule here inside `@layer pfer-components`. For example:
+
+ .pfer-badge {
+     background-color: #fee2e2;
+     padding: 0.125rem 0.5rem;
+     border-radius: 9999px;
+     display: inline-block;
+ }
+ =============================================================================
+*/
+@layer pfer-components {
+    /* Modifier Variant: Subtle Highlighted Error Badge Style */
+    div.pfer-error-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background-color: #fef2f2;
+        border: 1px solid #fca5a5;
+        padding: 0.25rem 0.5rem; /* px = Pixels / rem = Root Em */
+        border-radius: 0.25rem;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pfer-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - pfer: Project Form Error
+    - sr: Screen Reader (`.pfer-sr-only` = Project Form Error Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer pfer-utilities {
+    .pfer-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}

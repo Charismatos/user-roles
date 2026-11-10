@@ -1,0 +1,216 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Form Validation Errors Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering global validation error alert boxes (`<div>`, `<ul>`, `<li>` elements) for User Interface (UI) components.
+ * WHY:  Provides clean structural padding, error border framing, warning background alerts,
+ *       list typography, and design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/modules/forms/form-errors/form-top-errors.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES:
+ * Render validation error boxes automatically via the universal form-top-errors component or attach classes:
+ *
+ * Example 1: Standard error component call rendering validation alerts automatically
+ * <x-form.form-top-errors />
+ *
+ * Example 2: Attaching custom modifier classes via wrapperClass, listClass, and itemClass
+ * <x-form.form-top-errors bag="login" wrapperClass="pfe-input pfe-alert-box" listClass="pfe-list" itemClass="pfe-item" />
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pfe-border-color: #f87171;   // Custom red error border color
+ *     --pfe-border-radius: 0.5rem;   // Smoother rounded corners
+ *     --pfe-bg-color: #fef2f2;       // Custom soft red background alert tint
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pfe: Project Form Errors (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - RGB / RGBA: Red Green Blue Alpha (Color notation format)
+ *    - HTML: HyperText Markup Language
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update padding, error colors, or border variables inside the
+ *    `@layer pfe-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW ERROR MODIFIERS: Add your new modifier classes (e.g., warning banners,
+ *    dismissible error alerts with close buttons) right inside the `@layer pfe-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the form errors module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pfe: Project Form Errors
+ =============================================================================
+*/
+@layer pfe-tokens, pfe-base, pfe-components, pfe-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as alert background colors, error border colors, text typography fonts,
+                  padding dimensions, and border radii. They act as the single source of truth
+                  for the entire error container layout across 10,000+ projects.
+ WHEN: Evaluated when error alert elements calculate box dimensions, borders, and error list spacing.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - pfe: Project Form Errors (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pfe-border-color: #ef4444; // Custom error red for Project A
+          --pfe-bg-color: #fff1f2;     // Custom soft red background tint
+        }
+ =============================================================================
+*/
+@layer pfe-tokens {
+    :root {
+        --pfe-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --pfe-font-size: 0.875rem; /* rem = Root Em */
+        --pfe-font-weight: 500;
+        --pfe-line-height: 1.5;
+        --pfe-color-text: #991b1b; /* HEX = Hexadecimal error text color */
+        --pfe-bg-color: #fef2f2; /* HEX = Soft red alert background */
+        --pfe-border-color: #fca5a5; /* HEX = Light red border color */
+        --pfe-border-radius: 0.375rem; /* rem = Root Em */
+        --pfe-padding: 1rem;
+        --pfe-gap: 0.5rem;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Form Errors Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, error container `<div>`, `<ul>`, and `<li>` elements). It applies foundational layout rules,
+               box-sizing, flex column flow, list item styling, and links design tokens
+               directly to native elements so that every validation error alert looks polished out-of-the-box.
+ WHEN: Applied to standard error alert blocks rendered by the Blade component check in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, sizing scale, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - pfe: Project Form Errors
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer pfe-base {
+    div:has(> ul) {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: var(--pfe-gap);
+        width: 100%;
+        margin-bottom: 1rem; /* px = Pixels / rem = Root Em */
+        padding: var(--pfe-padding);
+        background-color: var(--pfe-bg-color);
+        border: 1px solid var(--pfe-border-color);
+        border-radius: var(--pfe-border-radius);
+        font-family: var(--pfe-font-family);
+        font-size: var(--pfe-font-size);
+        color: var(--pfe-color-text);
+    }
+
+    div:has(> ul) > ul {
+        margin: 0;
+        padding-left: 1.25rem; /* rem = Root Em */
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    div:has(> ul) > ul > li {
+        font-weight: var(--pfe-font-weight);
+        line-height: var(--pfe-line-height);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, modifier classes, and dynamic layout variants
+                     (such as `.pfe-alert-box` for elevated warning boxes or `.pfe-inline` for compact lists).
+                     This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when error containers possess specific modifier classes passed via wrapperClass, listClass, or itemClass.
+ WHY:  Provides visual variation and styling flexibility for error alert blocks across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - pfe: Project Form Errors
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSTRUCTION (ADDING NEW CODE):
+ To add custom error container behavior or variants (e.g., dismissible alert icons or warning banner themes),
+ insert your selector rule here inside `@layer pfe-components`. For example:
+
+ .pfe-warning {
+     background-color: #fffbeb;
+     border-color: #fde68a;
+     color: #92400e;
+ }
+ =============================================================================
+*/
+@layer pfe-components {
+    /* Modifier Variant: Elevated Warning Alert Box Style */
+    div.pfe-alert-box {
+        box-shadow:
+            0 1px 3px 0 rgba(0, 0, 0, 0.1),
+            0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        padding: 1.25rem; /* rem = Root Em */
+    }
+
+    /* Modifier Variant: Clean Unordered List Item Variant */
+    ul.pfe-list {
+        list-style-type: disc;
+    }
+
+    li.pfe-item {
+        font-weight: 600;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pfe-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - pfe: Project Form Errors
+    - sr: Screen Reader (`.pfe-sr-only` = Project Form Errors Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer pfe-utilities {
+    .pfe-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}

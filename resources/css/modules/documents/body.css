@@ -1,0 +1,215 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Body Tag Element Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering document root body elements (`<body>` tags, background viewports,
+ *       and full-screen canvas wrappers) for User Interface (UI) components across 10,000+ Laravel projects.
+ * WHY:  Provides clean margin/padding resets, box-sizing rules, typography font families, background property fallbacks,
+ *       and design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/components/layouts/body.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES AND PASS VALUES:
+ * Render body elements automatically via the universal body layout component and pass custom background props:
+ *
+ * Example 1: Comprehensive component call utilizing all custom props (`background`, `bgcolor`, `id`, `class`, etc.)
+ * <x-documents.body
+ *     background="radial-gradient(circle, #ffffff, #f1f5f9)"
+ *     bgcolor="#f8fafc"
+ *     id="app-root-body"
+ *     class="antialiased font-sans"
+ *     :style="['margin' => '0', 'padding' => '0']"
+ *     :aria="['busy' => 'false']"
+ *     :data="['env' => 'production', 'theme' => 'light']"
+ * />
+ *
+ * Example 2: Separate real-world usage examples covering each component custom prop:
+ *
+ * - (background): Defining background imagery or graphical gradients on the body tag
+ * <x-documents.body background="url('/images/auth-bg-pattern.png')" class="login-body-surface" />
+ *
+ * - (bgcolor): Setting solid legacy background colors on the body element
+ * <x-documents.body bgcolor="#0f172a" class="dark-dashboard-surface" />
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --plb-default-bg: #f8fafc;     // Custom default document body background color
+ *     --plb-font-family: 'Inter', sans-serif; // Custom global typography font
+ *     --plb-text-color: #111827;     // Custom global text color
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - plb: Project Layout Body (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - HTML: HyperText Markup Language
+ *    - ID: Identifier (Unique DOM element anchor)
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update typography families, default background colors, or text color variables inside the
+ *    `@layer plb-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW BODY MODIFIERS: Add your new modifier classes (e.g., dark mode global overrides, custom scrollbar styling,
+ *    fluid viewport centering layouts) right inside the `@layer plb-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the body layout module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - plb: Project Layout Body
+ =============================================================================
+*/
+@layer plb-tokens, plb-base, plb-components, plb-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as default document body background colors, text colors,
+                  typography font families, font sizes, line heights, and margin resets.
+                  They act as the single source of truth for the entire body layout component across 10,000+ projects.
+ WHEN: Evaluated when document body elements calculate default background fills, typography, and viewport sizing.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - plb: Project Layout Body (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --plb-default-bg: #ffffff; // Custom white body background for Project A
+          --plb-text-color: #374151; // Custom slate text color
+        }
+ =============================================================================
+*/
+@layer plb-tokens {
+    :root {
+        --plb-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --plb-font-size: 1rem; /* rem = Root Em */
+        --plb-line-height: 1.5;
+        --plb-default-bg: #ffffff; /* HEX = White background default */
+        --plb-text-color: #111827; /* HEX = Deep slate text color */
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Body Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, the `<body>` document root tag). It applies foundational layout rules,
+               box-sizing, margin/padding elimination, and links design tokens directly to native elements
+               so that every application page looks polished out-of-the-box.
+ WHEN: Applied to standard `<body>` tags rendered by the Blade layout component in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, viewport scrolling behavior, and structural margin resets across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - plb: Project Layout Body
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer plb-base {
+    body {
+        box-sizing: border-box;
+        display: block;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: var(--plb-font-family);
+        font-size: var(--plb-font-size);
+        line-height: var(--plb-line-height);
+        color: var(--plb-text-color);
+        background-color: var(--plb-default-bg);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, document body layout variations,
+                     and custom prop hooks (such as handling `background` and `bgcolor` attribute rendering).
+                     This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when body elements possess specific modifier classes passed via `class` or target component props.
+ WHY:  Provides semantic visual variations, data-hub target styling, and full-screen layout framing across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - plb: Project Layout Body
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSTRUCTION (ADDING NEW CODE):
+ To add custom body layout variants, handling for new component props, or global animation keyframes,
+ insert your selector rule here inside `@layer plb-components`. For example:
+
+ .plb-scrollable {
+     overflow-y: scroll;
+     overflow-x: hidden;
+ }
+ =============================================================================
+*/
+@layer plb-components {
+    /* Base Body Component Modifier Class */
+    .antialiased {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Handling for Component Custom Prop: [bgcolor] (Legacy / Solid Color Fallback Styling Hook) */
+    body[bgcolor] {
+        background-color: attr(bgcolor);
+    }
+
+    /* Handling for Component Custom Prop: [background] (Image / Gradient Background Styling Hook) */
+    body[background] {
+        background-image: attr(background);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* Handling for Component Custom Prop: [id / data-hub-target] (Target Hub Binding Indicator) */
+    body[data-hub-target] {
+        /* Custom state hooks for target-bound body elements across 10,000+ projects */
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.plb-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - plb: Project Layout Body
+    - sr: Screen Reader (`.plb-sr-only` = Project Layout Body Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer plb-utilities {
+    .plb-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}

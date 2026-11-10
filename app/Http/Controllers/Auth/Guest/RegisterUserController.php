@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\Guest;
 
 use App\Http\Controllers\Controller;
 use App\DTOs\Auth\Guest\UserData;
+use App\Http\Requests\Auth\Guest\UserCreateRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,24 +20,21 @@ class RegisterUserController extends Controller
      */
     public function register(): View
     {
-        return view('auth.guest.register');
+        return view('Auth.Guest.user-register');
     }
 
     /**
      * Handle an incoming registration request.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(UserCreateRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        // Use your FormRequest's built-in DTO mapper or validated data
+        $validatedData = $request->validated();
 
         $userData = UserData::fromArray([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
         ]);
 
         $user = User::create($userData->toArray());

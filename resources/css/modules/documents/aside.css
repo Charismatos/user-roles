@@ -1,0 +1,238 @@
+/**
+ * =============================================================================
+ * WHAT: Universal Project-Agnostic Polymorphic Aside Component Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on any page rendering dynamic sidebars, supplementary widgets, and author profile cards
+ *       (`<aside>` elements and secondary document blocks) for User Interface (UI) components across 10,000+ Laravel projects.
+ * WHY:  Provides clean structural padding, border framing, background styling, flexbox layout rules,
+ *       responsive spacing, typography, and design system scalability across 10,000+ distinct Laravel projects.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/components/documents/aside.css
+ * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES AND PASS VALUES:
+ * Render aside elements automatically via the universal polymorphic aside component and pass element types or custom props:
+ *
+ * Example 1: Comprehensive aside component call utilizing custom props (`datetime`, `id`, `class`, etc.)
+ * <x-documents.aside
+ *     type="aside"
+ *     datetime="2026-11-09T08:55:00+03:00"
+ *     id="author-bio-sidebar"
+ *     class="author-profile-card shadow-md p-6 rounded-xl border border-gray-100"
+ *     :style="['background-color' => '#ffffff', 'margin-top' => '2rem']"
+ *     :aria="['complementary' => 'true', 'label' => 'Author Biography']"
+ *     :data="['widget-type' => 'author-bio', 'user-handle' => 'charismadev']"
+ * />
+ *
+ * Example 2: Separate real-world usage examples covering each component custom prop:
+ *
+ * - (datetime): Specifying machine-readable timestamp metadata for time-sensitive sidebar widget notes or article logs
+ * <x-documents.aside
+ *     type="aside"
+ *     datetime="2026-11-09"
+ *     class="sidebar-datestamp-widget p-3 bg-slate-50 rounded"
+ *     role="note"
+ * >
+ *     <p class="text-xs text-slate-500">Last updated: November 9, 2026</p>
+ * </x-documents.aside>
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --pas-bg-color: #f9fafb;       // Custom sidebar background color
+ *     --pas-border-color: #e5e7eb;   // Custom sidebar border color
+ *     --pas-padding: 1.5rem;         // Custom inner padding spacing
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - pas: Project Aside (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - RGB / RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ *    - HTML: HyperText Markup Language
+ *    - ID: Identifier (Unique DOM element anchor)
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update padding dimensions, border variables, or semantic background colors inside the
+ *    `@layer pas-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW ASIDE MODIFIERS: Add your new modifier classes (e.g., collapsible sidebar panels, floating sticky widgets,
+ *    bordered card sidebars) right inside the `@layer pas-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the aside module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - pas: Project Aside
+ =============================================================================
+*/
+@layer pas-tokens, pas-base, pas-components, pas-utilities;
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as aside background colors, border framing colors, inner padding dimensions,
+                  typography font families, and border radii. They act as the single source of truth
+                  for the entire polymorphic aside component across 10,000+ projects.
+ WHEN: Evaluated when aside elements calculate box dimensions, borders, and background fills.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - pas: Project Aside (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --pas-bg-color: #f1f5f9; // Custom slate background tint for Project A
+          --pas-border-radius: 0.5rem; // Custom smooth rounded corners
+        }
+ =============================================================================
+*/
+@layer pas-tokens {
+    :root {
+        --pas-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --pas-font-size: 0.875rem; /* rem = Root Em */
+        --pas-line-height: 1.5;
+        --pas-bg-color: #f9fafb; /* HEX = Soft gray background */
+        --pas-border-color: #e5e7eb; /* HEX = Light gray border color */
+        --pas-text-color: #374151; /* HEX = Dark gray text color */
+        --pas-border-radius: 0.375rem; /* rem = Root Em */
+        --pas-padding: 1rem;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Aside Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
+               (in this case, the `<aside>` element). It applies foundational layout rules,
+               box-sizing, block display behavior, and links design tokens directly to native elements
+               so that every sidebar block looks polished out-of-the-box.
+ WHEN: Applied to standard `<aside>` tags rendered by the Blade component in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, fluid container behavior, and structural spacing across different browser engines (layout sizing in px Pixels and rem Root Em).
+ ABBREVIATIONS EXPANSION:
+    - pas: Project Aside
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer pas-base {
+    aside {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        margin-bottom: 1.5rem; /* rem = Root Em */
+        padding: var(--pas-padding);
+        background-color: var(--pas-bg-color);
+        border: 1px solid var(--pas-border-color);
+        border-radius: var(--pas-border-radius);
+        font-family: var(--pas-font-family);
+        font-size: var(--pas-font-size);
+        line-height: var(--pas-line-height);
+        color: var(--pas-text-color);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, sidebar widget layout variants, icon wrappers,
+                     and custom prop hooks (such as handling `datetime` metadata attribute rendering).
+                     This layer builds specific, reusable UI behaviors on top of the foundational base rules.
+ WHEN: Applied when aside elements possess specific modifier classes passed via `class` or target component props.
+ WHY:  Provides semantic visual variations, data-hub target styling, and responsive sidebar framing across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - pas: Project Aside
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSСТRUCTION (ADDING NEW CODE):
+ To add custom aside variants, handling for new component props, or sticky positioning rules,
+ insert your selector rule here inside `@layer pas-components`. For example:
+
+ .pas-sticky {
+     position: sticky;
+     top: 1rem;
+ }
+ =============================================================================
+*/
+@layer pas-components {
+    /* Modifier Variant: Sidebar Widget Box */
+    .sidebar-widget {
+        background-color: #ffffff;
+        border-color: #e5e7eb;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    /* Modifier Variant: Related Articles Box with Left Accent Border */
+    .related-articles-box {
+        background-color: #ffffff;
+        border-left: 4px solid #2563eb;
+        border-top: 1px solid var(--pas-border-color);
+        border-right: 1px solid var(--pas-border-color);
+        border-bottom: 1px solid var(--pas-border-color);
+    }
+
+    /* Modifier Variant: Author Profile Card */
+    .author-profile-card {
+        background-color: #ffffff;
+        border: 1px solid #f3f4f6;
+        border-radius: 0.75rem; /* rem = Root Em */
+        padding: 1.5rem;
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Handling for Component Custom Prop: [datetime] (Timestamp Metadata Styling Hook) */
+    aside[datetime] {
+        /* Custom styling hooks for timestamp-bound aside elements across 10,000+ projects */
+    }
+
+    /* Handling for Component Custom Prop: [id / data-hub-target] (Target Hub Binding Indicator) */
+    aside[data-hub-target] {
+        /* Custom state hooks for target-bound aside elements across 10,000+ projects */
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.pas-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - pas: Project Aside
+    - sr: Screen Reader (`.pas-sr-only` = Project Aside Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer pas-utilities {
+    .pas-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}

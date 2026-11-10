@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('username')->unique();
+            $table->string('username')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -23,8 +23,8 @@ return new class extends Migration
 
             $table->foreignId('invited_by_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamp('invitation_confirmed_at')->nullable();
-            $table->timestamp('roles_confirmed_at')->nullable()->after('remember_token');
-            $table->json('pending_roles')->nullable()->after('roles_confirmed_at');
+            $table->timestamp('roles_confirmed_at')->nullable();
+            $table->json('pending_roles')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
