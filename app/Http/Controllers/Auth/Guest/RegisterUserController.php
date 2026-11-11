@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth\Guest;
 
 use App\Http\Controllers\Controller;
-use App\DTOs\Auth\Guest\UserData;
+use App\Http\DTOs\Auth\Guest\UserData;
 use App\Http\Requests\Auth\Guest\UserCreateRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -43,6 +43,6 @@ class RegisterUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Registration successful.');
+        return redirect()->route('dashboard')->with('user_register_success', 'You have registered successfully.');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\Editor\UserUpdateRequest;
+use App\Http\Requests\Auth\Auth\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        return view('auth.auth.edit-user', compact('user'));
+        return view('Auth.Auth.user-edit', compact('user'));
     }
 
     /**
@@ -40,7 +40,7 @@ class UserController extends Controller
             $user->syncRoles($request->input('roles'));
         }
 
-        return redirect()->back()->with('success', 'Profile updated successfully.');
+        return redirect()->route('dashboard')->with('user_update_success', 'Your profile has been updated successfully.');
     }
 
     /**
@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function delete(User $user): View
     {
-        return view('auth.auth.delete-user', compact('user'));
+        return view('Auth.Auth.user-delete', compact('user'));
     }
 
     /**
@@ -58,6 +58,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('home')->with('success', 'Account deleted successfully.');
+        return redirect()->route('register')->with('user_delete_success', 'Account Removed Successfully.');
     }
 }

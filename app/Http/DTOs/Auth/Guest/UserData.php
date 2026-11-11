@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Auth\Guest;
+namespace App\Http\DTOs\Auth\Guest;
 
 readonly class UserData
 {

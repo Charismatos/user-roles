@@ -11,10 +11,10 @@ class UserDashboardController extends Controller
     /**
      * Display the authenticated user dashboard.
      */
-    public function index(Request $request): View
+    public function show(Request $request): View
     {
         $user = $request->user()->load('roles');
 
-        return view('auth.auth.dashboard', compact('user'));
+        return view('Auth.Auth.user-dashboard', compact('user'));
     }
 }

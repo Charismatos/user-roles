@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth\Guest;
 
-use App\DTOs\Auth\Guest\UserData;
+use App\Http\DTOs\Auth\Guest\UserData;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserCreateRequest extends FormRequest
@@ -18,9 +18,10 @@ class UserCreateRequest extends FormRequest
         $this->errorBag = $this->input('error_bag') ?? $this->route('error_bag') ?? 'default';
     }
 
-    // /**
-    //  * Determine if the user is authorized to make this request.
-    //  */
+    /**
+     * Determine if the user is authorized to make this request.
+     * If only authenticated administrators with permissions can create users via this form:
+     */
     // public function authorize(): bool
     // {
     //     return $this->user()?->can('create-users') ?? true;

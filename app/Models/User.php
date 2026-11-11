@@ -31,6 +31,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

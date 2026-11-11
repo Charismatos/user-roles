@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Auth\Editor;
+namespace App\Http\Requests\Auth\Auth;
 
-use App\DTOs\Auth\Guest\UserData;
+use App\Http\DTOs\Auth\Guest\UserData;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +14,26 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()?->can('update-users') ?? true;
+        /** @var \App\Models\User|null $currentUser */
+        $currentUser = $this->user();
+
+        if (! $currentUser) {
+            return false;
+        }
+
+        // Retrieve the target user being edited from the route parameter
+        $targetUser = $this->route('user');
+
+        // Handle whether the route binds by model instance, ID, or username string
+        $isSelf = false;
+        if ($targetUser instanceof User) {
+            $isSelf = $currentUser->id === $targetUser->id;
+        } else {
+            $isSelf = $currentUser->id === $targetUser || $currentUser->username === $targetUser;
+        }
+
+        // Allow if the user is updating their own profile OR has administrative permission
+        return $isSelf || $currentUser->can('update-users');
     }
 
     /**
