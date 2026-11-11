@@ -9,7 +9,7 @@
   -----------------------------------------------------------------------------
   FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / BUTTON PROPS):
   1. PROPS DEFINITION: Add your new variable to the @props array below with a fallback.
-  2. ATTRIBUTE PARSING: Add your property mapping logic inside the @php block.
+  2. ATTRIBUTE PARSING: Add your property mapping logic inside the PHP initialization block.
   3. RENDER SURFACE: Update the <button> tag structure at the bottom if structural markup changes.
   =============================================================================
 --}}

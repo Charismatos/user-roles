@@ -216,7 +216,7 @@ if (!empty($class)) {
   4. FUTURE MODIFICATIONS TO THIS COMPONENT FILE:
      - To add new custom properties, add them to the @props array with default fallbacks.
      - To prevent custom properties from leaking as literal HTML attributes, add their names
-       to the $excludedAttributes array inside the @php block.
+       to the $excludedAttributes array inside the PHP Initialization Block.
      - To safely output evaluated attributes and styles, ensure expressions utilize raw HTML
        interpolation syntax like {!! $elementAttributeBag !!}.
   =============================================================================

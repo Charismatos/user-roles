@@ -5,7 +5,7 @@
   WHY:  Centralizes flash message hydration, session checking, and global attribute parsing.
   WHO:  Backend and full-stack developers maintaining shared component libraries.
   WHERE: Saved as resources/views/components/alert.blade.php
-  HOW:  Called in views via <x-alert sessionKey="delete_success" message="Deleted Successfully" />
+  HOW:  Called in views via <x-alerts.alert sessionKey="delete_success" message="Deleted Successfully" />
   -----------------------------------------------------------------------------
   FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / ALERT TYPES):
   1. PROPS DEFINITION: Add your new variable to the @props array below with a fallback.
@@ -55,12 +55,14 @@
 */
 $id = $id ?? 'alert_' . Str::random(8);
 
-// Resolve message from session flash or direct prop argument
+// Revised Resolution Logic: If a sessionKey is provided, check the session strictly.
+// Do NOT fall back to the static message prop if the session key is missing.
 $resolvedMessage = null;
-if ($sessionKey) {
+if (!empty($sessionKey)) {
     $resolvedMessage = session($sessionKey);
+} else {
+    $resolvedMessage = $message;
 }
-$resolvedMessage = $resolvedMessage ?? $message;
 
 // Normalize and filter explicitly assigned HTML Global Attributes
 $globalAttributes = array_filter([
@@ -120,29 +122,29 @@ $alertAttributeBag = $attributes->except($excludedAttributes)->merge($globalAttr
   HOW TO REFERENCE, CALL, OR CUSTOMIZE THIS COMPONENT ACROSS 10,000+ PROJECTS:
   -----------------------------------------------------------------------------
   1. BASIC SESSION FLASH USAGE (e.g., matching delete_success at top of page or form):
-     <x-alert
+     <x-alerts.alert
          sessionKey="delete_success"
          wrapperClass="alert alert--danger"
          messageClass="alert__message"
      />
 
   2. DIRECT MESSAGE USAGE WITH CUSTOM STYLING CLASSES:
-     <x-alert
+     <x-alerts.alert
          message="Operation completed successfully."
          type="success"
-         wrapperClass="p-4 mb-4 rounded bg-green-100 text-green-700"
+         wrapperClass="alert alert--success"
          messageClass="font-medium"
      />
 
   3. ADVANCED USAGE WITH SLOT AND GLOBAL ATTRIBUTES (aria-*, data-*):
-     <x-alert
+     <x-alerts.alert
          sessionKey="status"
-         wrapperClass="alert-box"
+         wrapperClass="alert alert--info"
          aria-live="polite"
          data-testid="global-flash-alert"
      >
          <span>Additional custom slot content can go here.</span>
-     </x-alert>
+     </x-alerts.alert>
 
   4. FUTURE MODIFICATIONS TO THIS COMPONENT FILE:
      - To add new props: Add them to the @props array at the top with defaults.

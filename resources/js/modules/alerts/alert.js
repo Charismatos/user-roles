@@ -24,6 +24,7 @@
  * @property {boolean} [autoDismiss] - Whether to automatically dismiss alerts after a specified timeout. Default: false
  * @property {number} [dismissTimeout] - Timeout duration in milliseconds before auto-dismissal. Default: 5000
  * @property {boolean} [dismissible] - Whether to automatically append a close/dismiss button to alerts. Default: true
+ * @property {string} [dismissButtonClass] - CSS classes assigned to the dynamically injected dismiss button. Default: 'alert-dismiss-btn pb-btn pb-outline'
  * @property {Object} [lifecycleHooks] - Custom event lifecycle interceptors.
  * @property {function(NodeListOf<HTMLElement>): void} [lifecycleHooks.onInit] - Initialization hook.
  * @property {function(HTMLElement): void} [lifecycleHooks.onDismiss] - Alert dismissal intercept hook.
@@ -51,6 +52,7 @@ export class DynamicAlertManager {
                 autoDismiss: false,
                 dismissTimeout: 5000,
                 dismissible: true,
+                dismissButtonClass: "alert-dismiss-btn pb-btn pb-outline",
                 lifecycleHooks: {},
             },
             userConfig,
@@ -102,7 +104,7 @@ export class DynamicAlertManager {
             ) {
                 const dismissBtn = document.createElement("button");
                 dismissBtn.type = "button";
-                dismissBtn.className = "alert-dismiss-btn";
+                dismissBtn.className = this.config.dismissButtonClass;
                 dismissBtn.textContent = "×";
                 dismissBtn.setAttribute("aria-label", "Close alert");
 
@@ -207,7 +209,7 @@ export class DynamicAlertManager {
             if (this.config.dismissible) {
                 const dismissBtn = document.createElement("button");
                 dismissBtn.type = "button";
-                dismissBtn.className = "alert-dismiss-btn";
+                dismissBtn.className = this.config.dismissButtonClass;
                 dismissBtn.textContent = "×";
                 dismissBtn.setAttribute("aria-label", "Close alert");
                 dismissBtn.addEventListener("click", () => {

@@ -141,6 +141,17 @@
         --pl-muted-color: #6b7280; /* HEX = Muted gray text color */
         --pl-muted-hover: #374151; /* HEX = Darker gray hover color */
         --pl-muted-focus: rgba(156, 163, 175, 0.4);
+
+        /* Success / Inviting Green Button-Styled Link Theme Tokens */
+        --pl-success-bg: #059669; /* HEX = Vibrant emerald green background color */
+        --pl-success-color: #ffffff; /* HEX = White text color */
+        --pl-success-hover: #047857; /* HEX = Darker emerald hover background color */
+        --pl-success-focus: rgba(
+            5,
+            150,
+            105,
+            0.4
+        ); /* RGBA = Green focus ring shadow */
     }
 }
 
@@ -245,6 +256,28 @@
     .pl-muted:focus {
         outline: none;
         box-shadow: 0 0 0 3px var(--pl-muted-focus);
+    }
+
+    /* Variant: Success / Inviting Green Button-Styled Link */
+    .pl-success {
+        background-color: var(--pl-success-bg);
+        color: var(--pl-success-color);
+        padding: 0.5rem 1rem; /* Padding to give it a solid button box enclosure feel */
+        border-radius: var(
+            --pb-border-radius,
+            0.375rem
+        ); /* Rounded border enclosure */
+        font-weight: 600; /* Bold button typography */
+        text-decoration: none; /* Removes default underline */
+    }
+    .pl-success:hover {
+        background-color: var(--pl-success-hover);
+        color: var(--pl-success-color);
+        text-decoration: none; /* Prevents underline on hover */
+    }
+    .pl-success:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-success-focus);
     }
 
     /* Handling for Slot Content / Icon Wrapper Support inside links */

@@ -4,7 +4,7 @@
  * WHEN: Loaded on any page rendering global session flash or direct notification alert boxes
  *       (`<div>`, `<p>`, headings, and slot elements) for User Interface (UI) components.
  * WHY:  Provides clean structural padding, semantic alert color themes (success, danger, warning, info),
- *       border radii, text typography, and design system scalability across 10,000+ distinct Laravel projects.
+ *       inline-block auto-sizing based on text content, border radii, and design system scalability across 10,000+ distinct Laravel projects.
  * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
  * WHERE: Saved at resources/css/components/alert.css
  * HOW:  Imported via PostCSS/Vite (@import) or linked in host project layouts.
@@ -13,10 +13,10 @@
  * Render alert notification boxes automatically via the universal alert component or attach classes:
  *
  * Example 1: Standard success session flash alert call
- * <x-alert sessionKey="success" wrapperClass="pa-alert pa-success" messageClass="pa-msg" />
+ * <x-alerts.alert sessionKey="success" wrapperClass="pa-alert pa-success" messageClass="pa-msg" />
  *
  * Example 2: Direct danger alert call with custom modifier classes
- * <x-alert message="Failed to process transaction." type="danger" wrapperClass="pa-alert pa-danger" messageClass="pa-msg" />
+ * <x-alerts.alert message="Failed to process transaction." type="danger" wrapperClass="pa-alert pa-danger" messageClass="pa-msg" />
  * -----------------------------------------------------------------------------
  * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
  * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
@@ -117,10 +117,10 @@
  WHAT: Base Alert Layout Reset
  WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML tags
                (in this case, alert wrapper `<div>` and inner message tags). It applies foundational layout rules,
-               box-sizing, flexbox row alignment, and links design tokens directly to native elements
-               so that every flash alert looks polished out-of-the-box.
+               box-sizing, content-fit inline-block width sizing so containers scale precisely to text length rather than stretching 100% wide,
+               flexbox alignment, and links design tokens directly to native elements.
  WHEN: Applied to standard alert notification blocks rendered by the Blade component check in HTML (HyperText Markup Language).
- WHY:  Ensures consistent box-sizing, spacing scale, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
+ WHY:  Ensures consistent box-sizing, tight professional padding tailored to text length, and fluid layout behavior across different browser engines (layout sizing in px Pixels and rem Root Em).
  ABBREVIATIONS EXPANSION:
     - pa: Project Alert
     - HTML: HyperText Markup Language
@@ -131,10 +131,11 @@
 @layer pa-base {
     div[role="alert"] {
         box-sizing: border-box;
-        display: flex;
+        display: inline-flex;
+        align-self: flex-start; /* CRITICAL: Prevents the flex item from stretching 100% wide inside the column container */
         flex-direction: column;
         gap: var(--pa-gap);
-        width: 100%;
+        max-width: 100%; /* Prevents text overflow on narrow viewports */
         margin-bottom: 1rem; /* px = Pixels / rem = Root Em */
         padding: var(--pa-padding-y) var(--pa-padding-x);
         font-family: var(--pa-font-family);

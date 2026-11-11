@@ -150,6 +150,18 @@
         --pb-tooltip-text: #ffffff; /* HEX = White tooltip text color */
         --pb-tooltip-font-size: 0.75rem; /* rem = Root Em */
         --pb-tooltip-radius: 0.25rem; /* rem = Root Em */
+
+        /* Danger / Destructive Button Theme Tokens */
+        --pb-danger-bg: #dc2626; /* HEX = Vibrant red background */
+        --pb-danger-border: #dc2626; /* HEX = Vibrant red border */
+        --pb-danger-text: #ffffff; /* HEX = White text color */
+        --pb-danger-hover: #b91c1c; /* HEX = Darker crimson red hover background */
+        --pb-danger-focus: rgba(
+            220,
+            38,
+            38,
+            0.4
+        ); /* RGBA = Red focus ring shadow */
     }
 }
 
@@ -269,6 +281,20 @@
     .pb-outline:focus {
         outline: none;
         box-shadow: 0 0 0 3px var(--pb-outline-focus);
+    }
+
+    /* Variant: Danger / Destructive Button */
+    .pb-danger {
+        background-color: var(--pb-danger-bg);
+        border-color: var(--pb-danger-border);
+        color: var(--pb-danger-text);
+    }
+    .pb-danger:hover {
+        background-color: var(--pb-danger-hover);
+    }
+    .pb-danger:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pb-danger-focus);
     }
 
     /* Handling for Component Custom Prop: [icon] (Icon Container Wrapper Support) */

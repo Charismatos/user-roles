@@ -9,7 +9,7 @@
   -----------------------------------------------------------------------------
   FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / BODY PROPS):
   1. PROPS DEFINITION: Add your new variable to the @props array below with an appropriate fallback.
-  2. ATTRIBUTE PARSING: Add your property mapping logic inside the $dynamicAttributes array within the @php block.
+  2. ATTRIBUTE PARSING: Add your property mapping logic inside the $dynamicAttributes array within the PHP initialization block.
   3. RENDER SURFACE: Update the <body> tag structure at the bottom if structural markup or slot handling changes.
   =============================================================================
 --}}
@@ -194,7 +194,7 @@ if (!empty($class)) {
   4. FUTURE MODIFICATIONS TO THIS COMPONENT FILE:
      - To add new custom properties, add them to the @props array with default fallbacks.
      - To prevent new custom properties from leaking as literal HTML attributes, add their names
-       to the $excludedAttributes array inside the @php block.
+       to the $excludedAttributes array inside the PHP initialization block.
      - To safely output evaluated attributes and styles, ensure expressions utilize raw HTML
        interpolation syntax like {!! $bodyAttributeBag !!}.
   =============================================================================

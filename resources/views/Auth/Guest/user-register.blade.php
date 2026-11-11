@@ -13,19 +13,29 @@
   =============================================================================
 --}}
 
-  @vite(['resources/css/Auth/Guest/user-register.css', 'resources/js/Auth/Guest/user-register.js'])
+@vite(['resources/css/Auth/Guest/user-register.css', 'resources/js/Auth/Guest/user-register.js'])
 
 <div class="pf-screen-center">
     <div class="pf-card-bounding-box">
 
         {{-- Success Flash Notification Display --}}
-        @if(session('delete_success'))
-        <div role="alert">
-            <p>Deleted Successfully</p>
-        </div>
-        @endif
-
-
+        {{--
+          =============================================================================
+          WHAT: Flash Notification / Alert Display
+          WHEN: Renders a success message when the session contains a 'user_delete_success' key.
+          WHY:  Provides immediate feedback to users after successful actions.
+          WHO:  Backend developers and UX designers ensuring user-friendly interfaces.
+          WHERE: Included in the registration view template for consistent alert handling.
+          HOW:  Utilizes the universal alert component with specified props for styling and message display.
+          -----------------------------------------------------------------------------
+          FUTURE MODIFICATIONS:
+          - To change the session key or message, update the 'sessionKey' and 'message' props accordingly.
+          - To customize styling, modify the 'wrapperClass' and 'messageClass' props or override CSS in your project.
+          =============================================================================
+        --}}
+        <x-alerts.alert sessionKey="user_delete_success" message="Account Removed Successfully."
+            wrapperClass="successful_delete_alert pa-alert pa-success" messageClass="pa-msg" role="alert"
+            data-auto-dismiss="true" />
 
 
 
@@ -46,76 +56,31 @@
             <h1 class="pf-centered">REGISTER</h1>
             {{-- Tells the FormRequest which error bag to flash validation failures into --}}
             {{-- <inputtype="hidden"name="error_bag"value="user-register"> --}}
-            <x-forms.top-errors wrapperClass="user-register-errors pfe-alert-box"/>
-            {{-- @if ($errors->any())
-            <div class="user-errrors">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <x-forms.top-errors wrapperClass="pfe-alert-box" />
 
-            </div>
-            @endif --}}
             @csrf
 
             {{-- Name Field Component Reference --}}
-            <x-forms.form-field
-                type="text"
-                name="name"
-                label="Name"
-                placeholder="Enter full name"
-                wrapperClass="user-register-name"
-                inputClass=""
-                required
-                autocomplete="name"
-            />
+            <x-forms.form-field type="text" name="name" label="Name" placeholder="Enter full name"
+                wrapperClass="user-register-name" inputClass="" required autocomplete="name" />
 
             {{-- Username Field Component Reference --}}
-            <x-forms.form-field
-                type="text"
-                name="username"
-                label="Username"
-                placeholder="Choose a unique username"
-                wrapperClass=""
-                inputClass=""
-                autocomplete="username"
-            />
+            <x-forms.form-field type="text" name="username" label="Username" placeholder="Choose a unique username"
+                wrapperClass="" inputClass="" autocomplete="username" />
 
             {{-- Email Field Component Reference --}}
-            <x-forms.form-field
-                type="email"
-                name="email"
-                label="Email"
-                placeholder="user@example.com"
-                wrapperClass=""
-                inputClass=""
-                required
-                autocomplete="email"
-            />
+            <x-forms.form-field type="email" name="email" label="Email" placeholder="user@example.com"
+                wrapperClass="" inputClass="" required autocomplete="email" />
 
             {{-- Password Field Component Reference --}}
-            <x-forms.form-field
-                type="password"
-                name="password"
-                label="Password"
-                placeholder="Minimum 8 characters"
-                wrapperClass=""
-                inputClass=""
-                required
-            />
+            <x-forms.form-field type="password" name="password" label="Password" placeholder="Minimum 8 characters"
+                wrapperClass="" inputClass="" required />
 
             {{-- Submit Action Component Reference --}}
             <div class="pf-actions">
-                 <x-buttons.button
-                    id="save-user-btn"
-                    type="submit"
-                    variant="primary"
-                    label="Save Changes"
-                    icon="💾"
+                <x-buttons.button id="save-user-btn" type="submit" variant="primary" label="Save" icon="💾"
                     buttonRole="Click here to securely save your profile updates and sync changes"
-                    class="pb-btn pb-primary"
-                />
+                    class="pb-btn pb-primary" />
         </form>
     </div>
 </div>
