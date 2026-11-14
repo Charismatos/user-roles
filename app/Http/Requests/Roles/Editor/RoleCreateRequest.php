@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Requests\Auth\Editor;
+namespace App\Http\Requests\Roles\Editor;
 
-use App\Http\DTOs\Auth\Editor\RoleData;
+use App\Http\DTOs\Roles\Editor\RoleData;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class RoleUpdateRequest extends FormRequest
+class RoleCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()?->can('update-roles') ?? false;
+        $user = $this->user();
+
+        return $user->hasAnyRole(['administrator', 'Analyst', 'Researcher']);
     }
 
     /**
@@ -23,21 +24,18 @@ class RoleUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $role = $this->route('role');
-        $roleId = is_object($role) ? $role->id : $role;
-
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('roles', 'name')->ignore($roleId),
+                'unique:roles,name',
             ],
             'slug' => [
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique('roles', 'slug')->ignore($roleId),
+                'unique:roles,slug',
             ],
             'description' => [
                 'nullable',

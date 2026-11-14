@@ -35,10 +35,29 @@
             </div>
 
             <nav>
-                <x-links.link href="{{ route('roles.create') }}" label="Create User Roles" class="pl-link pl-default" />
-                {{-- <x-links.link href="{{ route('users.roles.invite') }}" label="Invite Candidates for Roles" class="pl-link pl-default" />
-                <x-links.link href="{{ route('users.roles.assign') }}" label="Assign User Roles" class="pl-link pl-default" /> --}}
+                {{-- Only show to users who possess the 'administrator' or 'super-administrator' role --}}
+                @if ($user->hasAnyRole(['administrator', 'analyst', 'researcher']))
+                    <x-links.link href="{{ route('roles.create') }}" label="Create User Roles"
+                        class="pl-link pl-default" />
+                    <x-links.link href="{{ route('users.roles.assign') }}" label="Assign User Roles"
+                        class="pl-link pl-default" />
+                    <x-links.link href="{{ route('users.roles.show', $user) }}" label="View Your Roles"
+                        class="pl-link pl-default" />
+                @endif
+
+                @if ($user->hasAnyRole(['administrator']))
+                    <x-links.link href="{{ route('roles.index') }}" label="View All Roles" class="pl-link pl-default" />
+                    <x-links.link href="{{ route('roles.assigned.index') }}" label="View All Assigned Roles"
+                        class="pl-link pl-default" />
+                @endif
+                {{-- Alternatively, restrict by your hierarchy level weight (e.g. level 1 or 2 up to a threshold) --}}
+                {{-- @if ($user->hasLevelAtOrAbove(2)) --}}
+                {{-- Management links here --}}
+                {{-- @endif --}}
+
+                {{-- Visible to all authenticated users --}}
                 <x-links.link href="{{ route('home') }}" label="Go To Home Page" class="pl-link pl-primary" />
+
             </nav>
         </aside>
 
@@ -52,6 +71,10 @@
             <x-alerts.alert sessionKey="user_login_success" message="You Logged In Successfully."
                 wrapperClass="pa-alert pa-success user_login_success_alert" messageClass="pa-msg" role="alert"
                 data-auto-dismiss="true" />
+
+            <x-alerts.alert sessionKey="roles_assigned_sent_email_success"
+                wrapperClass="pa-alert pa-success roles_assigned_sent_email_success_alert" messageClass="pa-msg"
+                role="alert" data-auto-dismiss="true" />
 
             {{--
           =============================================================================

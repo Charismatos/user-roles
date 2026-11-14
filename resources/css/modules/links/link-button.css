@@ -1,0 +1,383 @@
+/*
+ =============================================================================
+ COLOR VARIANT TOKENS (SOLID & TRANSPARENT / OUTLINE MODES)
+ =============================================================================
+*/
+@layer pl-tokens {
+    :root {
+        /* Success / Green */
+        --pl-success-bg: #059669;
+        --pl-success-color: #ffffff;
+        --pl-success-hover: #047857;
+        --pl-success-focus: rgba(5, 150, 105, 0.4);
+
+        /* Blue */
+        --pl-blue-bg: #2563eb;
+        --pl-blue-color: #ffffff;
+        --pl-blue-hover: #1d4ed8;
+        --pl-blue-focus: rgba(37, 99, 235, 0.4);
+
+        /* Red */
+        --pl-red-bg: #dc2626;
+        --pl-red-color: #ffffff;
+        --pl-red-hover: #b91c1c;
+        --pl-red-focus: rgba(220, 38, 38, 0.4);
+
+        /* Orange */
+        --pl-orange-bg: #ea580c;
+        --pl-orange-color: #ffffff;
+        --pl-orange-hover: #c2410c;
+        --pl-orange-focus: rgba(234, 88, 12, 0.4);
+
+        /* Purple */
+        --pl-purple-bg: #7c3aed;
+        --pl-purple-color: #ffffff;
+        --pl-purple-hover: #6d28d9;
+        --pl-purple-focus: rgba(124, 58, 237, 0.4);
+
+        /* Black */
+        --pl-black-bg: #111827;
+        --pl-black-color: #ffffff;
+        --pl-black-hover: #1f2937;
+        --pl-black-focus: rgba(17, 24, 39, 0.4);
+
+        /* Grey */
+        --pl-grey-bg: #6b7280;
+        --pl-grey-color: #ffffff;
+        --pl-grey-hover: #4b5563;
+        --pl-grey-focus: rgba(107, 114, 128, 0.4);
+
+        /* Yellow */
+        --pl-yellow-bg: #ca8a04;
+        --pl-yellow-color: #ffffff;
+        --pl-yellow-hover: #a16207;
+        --pl-yellow-focus: rgba(202, 138, 4, 0.4);
+    }
+}
+
+/*
+ =============================================================================
+ COLOR VARIANT COMPONENT STYLES (SOLID & TRANSPARENT CLASSES)
+ =============================================================================
+*/
+@layer pl-components {
+    /* -------------------------------------------------------------------------
+     * GREEN (Success)
+     * ------------------------------------------------------------------------- */
+    .pl-green {
+        background-color: var(--pl-success-bg);
+        color: var(--pl-success-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-green:hover {
+        background-color: var(--pl-success-hover);
+        color: var(--pl-success-color);
+        text-decoration: none;
+    }
+    .pl-green:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-success-focus);
+    }
+
+    .pl-green-trpt {
+        background-color: transparent;
+        color: var(--pl-success-bg);
+        border: 1px solid var(--pl-success-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-green-trpt:hover {
+        background-color: var(--pl-success-bg);
+        color: var(--pl-success-color);
+        text-decoration: none;
+    }
+    .pl-green-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-success-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * BLUE
+     * ------------------------------------------------------------------------- */
+    .pl-blue {
+        background-color: var(--pl-blue-bg);
+        color: var(--pl-blue-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-blue:hover {
+        background-color: var(--pl-blue-hover);
+        color: var(--pl-blue-color);
+        text-decoration: none;
+    }
+    .pl-blue:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-blue-focus);
+    }
+
+    .pl-blue-trpt {
+        background-color: transparent;
+        color: var(--pl-blue-bg);
+        border: 1px solid var(--pl-blue-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-blue-trpt:hover {
+        background-color: var(--pl-blue-bg);
+        color: var(--pl-blue-color);
+        text-decoration: none;
+    }
+    .pl-blue-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-blue-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * RED
+     * ------------------------------------------------------------------------- */
+    .pl-red {
+        background-color: var(--pl-red-bg);
+        color: var(--pl-red-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-red:hover {
+        background-color: var(--pl-red-hover);
+        color: var(--pl-red-color);
+        text-decoration: none;
+    }
+    .pl-red:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-red-focus);
+    }
+
+    .pl-red-trpt {
+        background-color: transparent;
+        color: var(--pl-red-bg);
+        border: 1px solid var(--pl-red-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-red-trpt:hover {
+        background-color: var(--pl-red-bg);
+        color: var(--pl-red-color);
+        text-decoration: none;
+    }
+    .pl-red-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-red-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * ORANGE
+     * ------------------------------------------------------------------------- */
+    .pl-orange {
+        background-color: var(--pl-orange-bg);
+        color: var(--pl-orange-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-orange:hover {
+        background-color: var(--pl-orange-hover);
+        color: var(--pl-orange-color);
+        text-decoration: none;
+    }
+    .pl-orange:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-orange-focus);
+    }
+
+    .pl-orange-trpt {
+        background-color: transparent;
+        color: var(--pl-orange-bg);
+        border: 1px solid var(--pl-orange-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-orange-trpt:hover {
+        background-color: var(--pl-orange-bg);
+        color: var(--pl-orange-color);
+        text-decoration: none;
+    }
+    .pl-orange-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-orange-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * PURPLE
+     * ------------------------------------------------------------------------- */
+    .pl-purple {
+        background-color: var(--pl-purple-bg);
+        color: var(--pl-purple-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-purple:hover {
+        background-color: var(--pl-purple-hover);
+        color: var(--pl-purple-color);
+        text-decoration: none;
+    }
+    .pl-purple:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-purple-focus);
+    }
+
+    .pl-purple-trpt {
+        background-color: transparent;
+        color: var(--pl-purple-bg);
+        border: 1px solid var(--pl-purple-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-purple-trpt:hover {
+        background-color: var(--pl-purple-bg);
+        color: var(--pl-purple-color);
+        text-decoration: none;
+    }
+    .pl-purple-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-purple-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * BLACK
+     * ------------------------------------------------------------------------- */
+    .pl-black {
+        background-color: var(--pl-black-bg);
+        color: var(--pl-black-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-black:hover {
+        background-color: var(--pl-black-hover);
+        color: var(--pl-black-color);
+        text-decoration: none;
+    }
+    .pl-black:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-black-focus);
+    }
+
+    .pl-black-trpt {
+        background-color: transparent;
+        color: var(--pl-black-bg);
+        border: 1px solid var(--pl-black-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-black-trpt:hover {
+        background-color: var(--pl-black-bg);
+        color: var(--pl-black-color);
+        text-decoration: none;
+    }
+    .pl-black-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-black-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * GREY
+     * ------------------------------------------------------------------------- */
+    .pl-grey {
+        background-color: var(--pl-grey-bg);
+        color: var(--pl-grey-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-grey:hover {
+        background-color: var(--pl-grey-hover);
+        color: var(--pl-grey-color);
+        text-decoration: none;
+    }
+    .pl-grey:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-grey-focus);
+    }
+
+    .pl-grey-trpt {
+        background-color: transparent;
+        color: var(--pl-grey-bg);
+        border: 1px solid var(--pl-grey-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-grey-trpt:hover {
+        background-color: var(--pl-grey-bg);
+        color: var(--pl-grey-color);
+        text-decoration: none;
+    }
+    .pl-grey-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-grey-focus);
+    }
+
+    /* -------------------------------------------------------------------------
+     * YELLOW
+     * ------------------------------------------------------------------------- */
+    .pl-yellow {
+        background-color: var(--pl-yellow-bg);
+        color: var(--pl-yellow-color);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-yellow:hover {
+        background-color: var(--pl-yellow-hover);
+        color: var(--pl-yellow-color);
+        text-decoration: none;
+    }
+    .pl-yellow:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-yellow-focus);
+    }
+
+    .pl-yellow-trpt {
+        background-color: transparent;
+        color: var(--pl-yellow-bg);
+        border: 1px solid var(--pl-yellow-bg);
+        padding: 0.625rem 1.25rem; /* Increased padding slightly for a larger button feel */
+        border-radius: var(--pb-border-radius, 0.375rem);
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .pl-yellow-trpt:hover {
+        background-color: var(--pl-yellow-bg);
+        color: var(--pl-yellow-color);
+        text-decoration: none;
+    }
+    .pl-yellow-trpt:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--pl-yellow-focus);
+    }
+}

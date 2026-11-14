@@ -1,0 +1,401 @@
+/**
+ * =============================================================================
+ * WHAT: Enterprise Role Details View Stylesheet Module (CSS: Cascading Style Sheets)
+ * WHEN: Loaded on the role details view template (`role-show.blade.php`) across 10,000+ Laravel projects
+ *       spanning diverse sectors including agriculture, defense, education, energy, finance, health,
+ *       justice, security, real estate, government, science, tech, environment, water, transport,
+ *       sports, construction, and trade & commerce.
+ * WHY:  Imports modular atomic component stylesheets (`link.css`, `button.css`, `alert.css`),
+ *       defines enterprise design tokens, and provides a centered card layout container, clean typographic
+ *       hierarchy, metadata key-value rows, and responsive action header alignments.
+ * WHO:  Frontend Engineers and Full-Stack Developers maintaining shared UI (User Interface) packages.
+ * WHERE: Saved at resources/css/Roles/Editor/role-show.css
+ * HOW:  Imported via Vite asset pipeline directive (@vite) within the host role details Blade template.
+ * -----------------------------------------------------------------------------
+ * HOW TO CALL / REFERENCE THIS MODULE IN BLADE TEMPLATES AND PASS VALUES:
+ * The module automatically styles the role details wrapper card, header, metadata rows, and navigation links:
+ *
+ * Example: Automatic application via standard role details view wrapper structure
+ * <div class="rs-details-shell">
+ *     <div class="rs-details-card">
+ *         <header class="rs-header">...</header>
+ *         <div class="rs-meta-grid">...</div>
+ *     </div>
+ * </div>
+ * -----------------------------------------------------------------------------
+ * HOW TO CUSTOMIZE / ENTER CUSTOM VALUES IN HOST PROJECTS:
+ * Override design token variables in your host project's main CSS file (e.g., resources/css/app.css):
+ *
+ * :root {
+ *     --rs-card-max-width: 650px;   // Custom max width for role details card
+ *     --rs-bg-canvas: #f1f5f9;      // Custom background canvas color
+ * }
+ * -----------------------------------------------------------------------------
+ * ABBREVIATIONS GLOSSARY FOR THIS MODULE:
+ *    - CSS: Cascading Style Sheets
+ *    - UI: User Interface
+ *    - rs: Role Show (Design System Prefix)
+ *    - rem: Root Em (Relative font size unit based on root element)
+ *    - px: Pixels (Absolute length unit)
+ *    - HEX: Hexadecimal (Color notation format)
+ *    - RGB / RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ *    - HTML: HyperText Markup Language
+ *    - ID: Identifier (Unique DOM element anchor)
+ *    - API: Application Programming Interface
+ * -----------------------------------------------------------------------------
+ * FUTURE MODIFICATIONS (HOW TO ADD NEW CODE / FEATURES):
+ * 1. DESIGN TOKENS: Update card max-widths, background canvas colors, or shadow elevations inside the
+ *    `@layer rs-tokens` block to alter them globally across all 10,000 projects.
+ * 2. NEW ROLE METADATA FIELDS: To add custom permission badges or security clearance levels,
+ *    insert your new row selector rules right inside the `@layer rs-components` section below.
+ * =============================================================================
+ */
+
+/*
+ =============================================================================
+ CASCADE LAYER DECLARATION
+ WHAT: Establishes clear cascade boundaries for the role show module (CSS Cascading Style Sheets Layers).
+ WHEN: Evaluated by the browser during CSS (Cascading Style Sheets) parsing.
+ WHY:  Prevents specificity clashes, allowing host projects to override styles easily.
+ ABBREVIATIONS EXPANSION:
+    - CSS: Cascading Style Sheets
+    - rs: Role Show
+ =============================================================================
+*/
+@layer rs-tokens, rs-base, rs-components, rs-utilities;
+
+/*
+ =============================================================================
+ 1. IMPORT MODULAR ATOMIC DESIGN-SYSTEM MODULES
+ WHAT: Imports external atomic packages for links, buttons, and alerts.
+ NOTE: link.css, button.css, and alert.css are imported to supply `.pl-link`, `.pb-btn`, and `.pa-alert` rules.
+ =============================================================================
+*/
+@import "../../modules/links/link.css";
+@import "../../modules/buttons/button.css";
+@import "../../modules/alerts/alert.css";
+
+/*
+ =============================================================================
+ WHAT: Global Design Tokens (Theme Variables)
+ WHAT IS A TOKEN: Design tokens are the atomic, centralized storage variables (CSS Custom Properties)
+                  that hold design decisions such as card max widths, canvas background colors, surface background surfaces,
+                  shadow elevations, typography font families, and border radii.
+                  They act as the single source of truth for the entire role details view across 10,000+ projects.
+ WHEN: Evaluated when role details shell elements calculate grid dimensions, padding, and surface backgrounds.
+ WHY:  Enables zero-touch project rebranding via native CSS (Cascading Style Sheets) custom properties.
+ ABBREVIATIONS EXPANSION:
+    - rs: Role Show (Prefix for design tokens)
+    - rem: Root Em (Relative typography unit)
+    - HEX: Hexadecimal (Color notation format)
+    - RGBA: Red Green Blue Alpha (Transparent shadow color format)
+ HOW TO OVERRIDE IN A HOST PROJECT:
+        :root {
+          --rs-card-max-width: 600px; // Custom card max width for Project A
+          --rs-bg-canvas: #f8fafc;    // Custom background color
+        }
+ =============================================================================
+*/
+@layer rs-tokens {
+    :root {
+        --rs-font-family:
+            system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            sans-serif;
+        --rs-font-size: 0.875rem; /* rem = Root Em */
+        --rs-line-height: 1.5;
+        --rs-card-max-width: 600px; /* px = Pixels */
+        --rs-bg-canvas: #f8fafc; /* HEX = Soft gray canvas background */
+        --rs-bg-surface: #ffffff; /* HEX = Pure white card surface */
+        --rs-border-color: #e2e8f0; /* HEX = Light border color */
+        --rs-text-primary: #0f172a; /* HEX = Deep slate primary text color */
+        --rs-text-muted: #64748b; /* HEX = Slate muted text color */
+        --rs-primary-color: #2563eb; /* HEX = Vibrant blue accent color */
+        --rs-border-radius: 0.5rem; /* rem = Root Em */
+        --rs-shadow-md:
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Base Role Details View Layout Reset
+ WHAT IS BASE: The base block provides the elemental, unclassed styling defaults for raw HTML structural tags
+               within the role details view (such as viewports and centering wrappers).
+               It applies foundational layout rules, box-sizing, typography inheritance, and links design tokens directly.
+ WHEN: Applied to standard wrapper elements rendered in HTML (HyperText Markup Language).
+ WHY:  Ensures consistent box-sizing, fluid centering, and margin resets across different browser engines.
+ ABBREVIATIONS EXPANSION:
+    - rs: Role Show
+    - HTML: HyperText Markup Language
+    - rem: Root Em
+    - px: Pixels
+ =============================================================================
+*/
+@layer rs-base {
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--rs-bg-canvas);
+        font-family: var(--rs-font-family);
+        color: var(--rs-text-primary);
+        font-size: var(--rs-font-size);
+        line-height: var(--rs-line-height);
+    }
+
+    /* Centered Role Details Shell Container */
+    div:has(> div > header) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 1.5rem;
+        box-sizing: border-box;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Component Modifiers and State Enhancements
+ WHAT IS COMPONENTS: Components encapsulate specific UI patterns, card surface framing, header layouts, metadata key-value rows,
+                     code badges, and action link alignments. This layer builds professional, reusable
+                     role details UI behaviors on top of the foundational base rules.
+ WHEN: Applied when elements possess specific component structures and design system classes.
+ WHY:  Transforms an unstyled raw HTML template into a sleek, modern enterprise-grade administrative inspection view across 10,000 projects.
+ ABBREVIATIONS EXPANSION:
+    - rs: Role Show
+    - UI: User Interface
+    - rem: Root Em
+    - px: Pixels
+ -----------------------------------------------------------------------------
+ FUTURE MODIFICATION INSTRUCTION (ADDING NEW CODE):
+ To add custom permission grid badges or security clearance level indicators,
+ insert your selector rule here inside `@layer rs-components`. For example:
+
+ .rs-permission-badge {
+     display: inline-flex;
+     padding: 0.25rem 0.5rem;
+     background-color: #e0f2fe;
+     color: #0369a1;
+     border-radius: 9999px;
+ }
+ =============================================================================
+*/
+@layer rs-components {
+    /* Outer Card Bounding Container (`<div>` enclosing the header, alerts, and metadata) */
+    div > div:has(> header) {
+        background-color: var(--rs-bg-surface);
+        border: 1px solid var(--rs-border-color);
+        border-radius: var(--rs-border-radius);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: var(--rs-card-max-width);
+        box-shadow: var(--rs-shadow-md);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    /* Role Management Header Section (`<header>`) */
+    div > div:has(> header) > header {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        border-bottom: 1px solid var(--rs-border-color);
+        padding-bottom: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+        div > div:has(> header) > header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    /* Header Title Group (`<div>` holding `<h1>` and `<p>`) */
+    div > div:has(> header) > header > div:first-child {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    /* Section Header Title (`<h1>Role Details</h1>`) */
+    div > div:has(> header) > header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: var(--rs-text-primary);
+    }
+
+    /* Header Subtitle (`<p>System overview...</p>`) */
+    div > div:has(> header) > header p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: var(--rs-text-muted);
+    }
+
+    /* Header Action Links Group (`<div>` holding edit and back links) */
+    div > div:has(> header) > header > div:last-child {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    /* Role Attributes Metadata Display Container (`<div>` enclosing key-value rows) */
+    div > div:has(> header) > div:not(:has(header, x-alerts\.alert)) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        background-color: var(--rs-bg-canvas);
+        padding: 1.25rem;
+        border-radius: var(--rs-border-radius);
+        border: 1px dashed var(--rs-border-color);
+    }
+
+    /* Individual Metadata Row (`<div>` enclosing attribute label & value) */
+    div > div:has(> header) > div:not(:has(header, x-alerts\.alert)) > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed var(--rs-border-color);
+    }
+
+    div
+        > div:has(> header)
+        > div:not(:has(header, x-alerts\.alert))
+        > div:last-child {
+        border-bottom: none;
+    }
+
+    /* Metadata Attribute Label (`<span>`) */
+    div
+        > div:has(> header)
+        > div:not(:has(header, x-alerts\.alert))
+        > div
+        span:first-child {
+        font-weight: 600;
+        color: var(--rs-text-muted);
+    }
+
+    /* Metadata Attribute Value (`<span>`) */
+    div
+        > div:has(> header)
+        > div:not(:has(header, x-alerts\.alert))
+        > div
+        span:last-child {
+        font-weight: 500;
+        color: var(--rs-text-primary);
+        text-align: right;
+    }
+
+    /* Inline Code Styling inside Metadata Values (`<code>`) */
+    div > div:has(> header) > div:not(:has(header, x-alerts\.alert)) code {
+        font-family:
+            ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.8125rem;
+        background-color: #e2e8f0;
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+        color: #1e293b;
+    }
+}
+
+/*
+ =============================================================================
+ WHAT: Utility Overrides
+ WHAT IS UTILITIES: Utilities are single-purpose, highly specific helper classes (such as `.rs-sr-only`)
+                    designed to accomplish one exact job (like hiding text visually while keeping it accessible
+                    for screen readers). Because utilities sit at the very end of the cascade layer order,
+                    they carry ultimate override priority when applied to an element.
+ WHEN: Emergency style overrides or accessibility enhancements for SR (Screen Reader) users.
+ WHY:  Guarantees high-priority application for utility display classes (such as Screen Reader Only text hiding).
+ ABBREVIATIONS EXPANSION:
+    - rs: Role Show
+    - sr: Screen Reader (`.rs-sr-only` = Role Show Screen Reader Only)
+    - px: Pixels (`1px` width/height/margin clip dimensions)
+ =============================================================================
+*/
+@layer rs-utilities {
+    .rs-sr-only {
+        /* sr = Screen Reader */
+        position: absolute;
+        width: 1px; /* px = Pixels */
+        height: 1px; /* px = Pixels */
+        padding: 0;
+        margin: -1px; /* px = Pixels */
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+/**
+ * =============================================================================
+ * COMPREHENSIVE SECTOR-SPECIFIC REAL-WORLD COMPONENT USAGE EXAMPLES
+ * -----------------------------------------------------------------------------
+ * Below are real-world examples demonstrating how the universal anonymous Blade components
+ * (`<x-alerts.alert>`, `<x-links.link>`, and `<x-buttons.button>`) and their respective `@props([])`
+ * configurations are utilized across 10,000+ Laravel projects in different industry sectors:
+ *
+ * 1. AGRICULTURE SECTOR (Farm Management & Supply Chain Roles):
+ *    - Alert: <x-alerts.alert sessionKey="crop_role_saved" message="Agronomy supervisor role established." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('farm.roles.edit', ['role' => $role->slug]) }}" label="Edit Agronomy Permissions" class="pl-link pl-primary" />
+ *    - Button: <x-buttons.button id="sync-crop-sensors" type="submit" variant="primary" label="Sync IoT Sensors" icon="🌾" buttonRole="Sync crop telemetry permissions" class="pb-btn pb-primary" />
+ *
+ * 2. DEFENSE & SECURITY SECTORS (Classified Clearance & Personnel Roles):
+ *    - Alert: <x-alerts.alert sessionKey="clearance_update" message="Security clearance matrix updated." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('defense.clearance.audit') }}" label="Audit Clearance Logs" class="pl-link pl-primary" target="_blank" />
+ *    - Button: <x-buttons.button id="revoke-clearance" type="button" variant="danger" label="Revoke Access" icon="🛡️" buttonRole="Emergency revocation of security credentials" class="pb-btn pb-danger" />
+ *
+ * 3. EDUCATION SECTOR (Academic Faculty & Student Portal Roles):
+ *    - Alert: <x-alerts.alert sessionKey="faculty_enrolled" message="Department chair role assigned successfully." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('campus.courses.catalog') }}" label="View Course Catalog" class="pl-link pl-default" />
+ *    - Button: <x-buttons.button id="publish-grades" type="submit" variant="outline" label="Publish Grades" icon="🎓" buttonRole="Authorize faculty grade submission access" class="pb-btn pb-outline" />
+ *
+ * 4. ENERGY & WATER SECTORS (Grid Infrastructure & Utility Management Roles):
+ *    - Alert: <x-alerts.alert sessionKey="grid_role_synced" message="Substation operator permissions synchronized." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('grid.telemetry.view') }}" label="Inspect Substation Controls" class="pl-link pl-primary" />
+ *    - Button: <x-buttons.button id="emergency-shutdown" type="button" variant="danger" label="Grid Disconnect" icon="⚡" buttonRole="Authorize emergency sector power cutoff" class="pb-btn pb-danger" />
+ *
+ * 5. FINANCE & TRADE SECTORS (Banking Middleware & Fintech Compliance Roles):
+ *    - Alert: <x-alerts.alert sessionKey="nps_compliance_ok" message="Fintech compliance role authorized under NPS Act 2020." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('treasury.audit.trail') }}" label="View Treasury Audit Log" class="pl-link pl-primary" />
+ *    - Button: <x-buttons.button id="approve-wire" type="submit" variant="primary" label="Authorize Settlement" icon="💳" buttonRole="Approve high-value interbank clearing batch" class="pb-btn pb-primary" />
+ *
+ * 6. HEALTH SECTOR (Hospital Electronic Health Records & Clinical Roles):
+ *    - Alert: <x-alerts.alert sessionKey="hipaa_role_verified" message="Attending physician access role verified." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('hospital.ehr.records') }}" label="Review EHR Permissions" class="pl-link pl-default" />
+ *    - Button: <x-buttons.button id="emergency-override" type="button" variant="danger" label="Clinical Override" icon="🏥" buttonRole="Grant emergency trauma unit record access" class="pb-btn pb-danger" />
+ *
+ * 7. JUSTICE & GOVERNMENT SECTORS (Court Case Management & Public Registry Roles):
+ *    - Alert: <x-alerts.alert sessionKey="docket_role_assigned" message="Magistrate docket access role locked." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('court.docket.search') }}" label="Search Case Dockets" class="pl-link pl-primary" />
+ *    - Button: <x-buttons.button id="seal-record" type="submit" variant="outline" label="Seal Case File" icon="⚖️" buttonRole="Restrict case file access to judicial officers only" class="pb-btn pb-outline" />
+ *
+ * 8. REAL ESTATE & CONSTRUCTION SECTORS (Property Listing & Zoning Permit Roles):
+ *    - Alert: <x-alerts.alert sessionKey="zoning_role_updated" message="Zoning inspector role credentials renewed." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('realestate.permits.index') }}" label="View Building Permits" class="pl-link pl-default" />
+ *    - Button: <x-buttons.button id="approve-blueprint" type="submit" variant="primary" label="Approve Blueprint" icon="🏗️" buttonRole="Sign off on architectural zoning compliance" class="pb-btn pb-primary" />
+ *
+ * 9. SCIENCE & TECHNOLOGY SECTORS (Laboratory Data & API Gateway Roles):
+ *    - Alert: <x-alerts.alert sessionKey="lab_role_active" message="Principal investigator API scope granted." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="https://api.research-gateway.org/docs" label="API Gateway Docs" target="_blank" class="pl-link pl-primary" />
+ *    - Button: <x-buttons.button id="regenerate-api-key" type="submit" variant="outline" label="Rotate API Keys" icon="🔑" buttonRole="Regenerate secure cryptographic tokens for role API access" class="pb-btn pb-outline" />
+ *
+ * 10. ENVIRONMENT & TRANSPORT SECTORS (Emission Monitoring & Fleet Dispatch Roles):
+ *    - Alert: <x-alerts.alert sessionKey="fleet_role_synced" message="Fleet dispatcher permissions active." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('transport.fleet.map') }}" label="Live Fleet Tracking" class="pl-link pl-primary" />
+ *    - Button: <x-buttons.button id="dispatch-unit" type="submit" variant="primary" label="Dispatch Transport" icon="🚚" buttonRole="Authorize cross-border freight dispatch protocol" class="pb-btn pb-primary" />
+ *
+ * 11. SPORTS SECTOR (Athletic Federation & Tournament Management Roles):
+ *    - Alert: <x-alerts.alert sessionKey="match_official_assigned" message="Referee supervisor role confirmed." wrapperClass="pa-alert pa-success" messageClass="pa-msg" role="alert" />
+ *    - Link: <x-links.link href="{{ route('sports.tournament.schedule') }}" label="Tournament Match Schedule" class="pl-link pl-default" />
+ *    - Button: <x-buttons.button id="certify-match" type="submit" variant="primary" label="Certify Results" icon="🏆" buttonRole="Official sign-off on tournament match standings" class="pb-btn pb-primary" />
+ * =============================================================================
+ */

@@ -81,6 +81,8 @@
     - pl: Project Link
  =============================================================================
 */
+
+@import "./link-button.css";
 @layer pl-tokens, pl-base, pl-components, pl-utilities;
 
 /*

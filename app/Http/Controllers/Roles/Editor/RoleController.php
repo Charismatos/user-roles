@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Editor;
+namespace App\Http\Controllers\Roles\Editor;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\Editor\RoleCreateRequest;
-use App\Http\Requests\Auth\Editor\RoleUpdateRequest;
+use App\Http\Requests\Roles\Editor\RoleCreateRequest;
+use App\Http\Requests\Roles\Editor\RoleUpdateRequest;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +26,7 @@ class RoleController extends Controller
             ]);
         }
 
-        return view('auth.editor.roles.index', compact('roles'));
+        return view('Roles.Editor.roles-index', compact('roles'));
     }
 
     /**
@@ -34,7 +34,7 @@ class RoleController extends Controller
      */
     public function create(): View
     {
-        return view('auth.editor.roles.create');
+        return view('Roles.Editor.role-create');
     }
 
     /**
@@ -56,8 +56,8 @@ class RoleController extends Controller
         }
 
         return redirect()
-            ->route('roles.index')
-            ->with('success', 'Role created successfully.');
+            ->route('roles.show', ['role' => $role->slug])
+            ->with('role_create_success', 'Role created successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class RoleController extends Controller
             ]);
         }
 
-        return view('auth.editor.roles.show', compact('role'));
+        return view('Roles.Editor.role-show', compact('role'));
     }
 
     /**
@@ -80,7 +80,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role): View
     {
-        return view('auth.editor.roles.edit', compact('role'));
+        return view('Roles.Editor.role-edit', compact('role'));
     }
 
     /**
@@ -115,8 +115,8 @@ class RoleController extends Controller
         }
 
         return redirect()
-            ->route('roles.index')
-            ->with('success', 'Role updated successfully.');
+            ->route('roles.show', ['role' => $role->slug])
+            ->with('role_update_success', 'Role updated successfully.');
     }
 
     /**

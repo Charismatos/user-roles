@@ -24,7 +24,7 @@ const myDashboardNav = new UniversalDashboardNavigationManager({
 // 2. Initialize Flash Notifications Alert Manager with Custom Dismiss Button Classes
 const myAlertManager = new DynamicAlertManager({
     alertSelector:
-        ".user_registration_success_alert, .user_update_success_alert, .user_login_success_alert, .pa-alert",
+        ".user_registration_success_alert, .user_update_success_alert, .user_login_success_alert, roles_assigned_sent_email_success_alert, .pa-alert",
     autoDismiss: true,
     dismissTimeout: 4000,
     dismissible: true,

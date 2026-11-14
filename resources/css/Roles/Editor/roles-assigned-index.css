@@ -1,0 +1,9 @@
+@import "../../modules/links/link.css";
+@import "../../modules/buttons/button.css";
+@import "../../modules/alerts/alert.css";
+@import "../../modules/tables/table.css";
+
+.table-actions {
+    display: flex;
+    justify-content: space-between;
+}

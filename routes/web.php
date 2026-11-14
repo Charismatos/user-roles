@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\Guest\HomeController;
-use App\Http\Controllers\Auth\Editor\RoleController;
 use App\Http\Controllers\Auth\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\Auth\ProfileSetupController;
 use App\Http\Controllers\Auth\Auth\UserController;
 use App\Http\Controllers\Auth\Auth\UserDashboardController;
-use App\Http\Controllers\Auth\Editor\RoleManagementController;
 use App\Http\Controllers\Auth\Guest\RegisterUserController;
+use App\Http\Controllers\Roles\Editor\RoleController;
+use App\Http\Controllers\Roles\Editor\RoleManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,9 +36,8 @@ Route::middleware('guest')->group(function () {
 | Signed Invitation Confirmation Route (Email Link Landing)
 |--------------------------------------------------------------------------
 */
-Route::get('/users/{user}/roles/confirm-invitation', [RoleManagementController::class, 'confirmInvitation'])
-    ->name('users.roles.confirm-invitation')
-    ->middleware('signed');
+Route::get('/users/{user}/roles/confirm-agreement', [RoleManagementController::class, 'confirmAgreement'])
+    ->name('users.roles.confirm-agreement');
 
 /*
 |--------------------------------------------------------------------------
@@ -69,16 +68,20 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     // 1. User Role Index, Assignment, and Invocation Management
     // (Static paths MUST be placed BEFORE wildcards like {user})
-    Route::get('/users/roles', [RoleManagementController::class, 'assignedIndex'])->name('users.roles.index');
+    Route::get('/users/roles', [RoleManagementController::class, 'assignedIndex'])->name('roles.assigned.index');
     Route::get('/users/roles/assign', [RoleManagementController::class, 'assignView'])->name('users.roles.assign');
+    Route::get('/users/roles/invite', [RoleManagementController::class, 'inviteView'])->name('users.roles.invite');
     Route::post('/users/roles/send-invites', [RoleManagementController::class, 'sendInvitations'])->name('users.roles.send-invites');
 
+    // Specific User Role Form Edit & Show/Update Routes
+    Route::get('/users/{user}/roles/edit', [RoleManagementController::class, 'editRolesAssigned'])->name('users.roles.edit');
     Route::get('/users/{user}/roles', [RoleManagementController::class, 'assignedShow'])->name('users.roles.show');
-    Route::put('/users/{user}/roles', [RoleManagementController::class, 'updateRoles'])->name('users.roles.update');
+    Route::match(['put', 'patch'], '/users/{user}/roles', [RoleManagementController::class, 'updateRolesAssigned'])->name('users.roles.update');
 
     // 2. System Roles CRUD & Specialized Filters
     // (Static paths MUST be placed BEFORE wildcards like {role:slug})
-    Route::get('/roles/by-level', [RoleManagementController::class, 'getRolesByLevel'])->name('roles.by-level');
+    Route::get('/roles/by-level/create', [RoleManagementController::class, 'rolesByLevelCreate'])->name('roles.by-level.create');
+    Route::get('/users/{user}/roles/by-level/update', [RoleManagementController::class, 'rolesByLevelUpdate'])->name('roles.by-level.update');
     Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
     Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
     Route::post('roles', [RoleController::class, 'store'])->name('roles.store');

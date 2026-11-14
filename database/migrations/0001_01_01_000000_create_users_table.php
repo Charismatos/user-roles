@@ -22,7 +22,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('invited_by_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('invitation_confirmed_at')->nullable();
             $table->timestamp('roles_confirmed_at')->nullable();
             $table->json('pending_roles')->nullable();
         });

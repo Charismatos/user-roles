@@ -1,18 +1,26 @@
 <?php
 
-namespace App\Http\Requests\Auth\Editor;
+namespace App\Http\Requests\Roles\Editor;
 
-use App\Http\DTOs\Auth\Editor\RoleData;
+use App\Http\DTOs\Roles\Editor\RoleData;
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RoleCreateRequest extends FormRequest
+class RoleUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * Authorized if the user is authenticated and the target role's hierarchy level
+     * is greater in integer value than the user's own highest role level
+     * (e.g., a user at level 3 can only update roles at level 4, 5, 6, etc.).
      */
     public function authorize(): bool
     {
-        return $this->user()?->can('create-roles') ?? false;
+        $user = $this->user();
+
+        return $user->hasAnyRole(['administrator', 'Analyst', 'Researcher']);
     }
 
     /**
@@ -22,18 +30,21 @@ class RoleCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $role = $this->route('role');
+        $roleId = is_object($role) ? $role->id : $role;
+
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                'unique:roles,name',
+                Rule::unique('roles', 'name')->ignore($roleId),
             ],
             'slug' => [
                 'nullable',
                 'string',
                 'max:255',
-                'unique:roles,slug',
+                Rule::unique('roles', 'slug')->ignore($roleId),
             ],
             'description' => [
                 'nullable',

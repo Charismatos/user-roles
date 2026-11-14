@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\DTOs\Auth\Editor;
+namespace App\Http\DTOs\Roles\Editor;
 
 readonly class RoleData
 {

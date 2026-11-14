@@ -1,0 +1,4 @@
+edit -> "📝"
+save -> "💾"
+login -> "🔑"
+delete -> "🗑️"
