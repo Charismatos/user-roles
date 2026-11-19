@@ -2,6 +2,7 @@
 @import "../../modules/buttons/button.css";
 @import "../../modules/alerts/alert.css";
 @import "../../modules/tables/table.css";
+@import "../../modules/tooltips/datahint.css";
 
 .table-actions {
     display: flex;

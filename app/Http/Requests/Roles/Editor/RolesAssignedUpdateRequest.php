@@ -14,8 +14,7 @@ class RolesAssignedUpdateRequest extends FormRequest
     {
         $user = $this->user();
 
-        // Ensure the authenticated user has proper administrative privileges
-        return $user && $user->hasAnyRole(['administrator', 'Analyst']);
+        return $user->hasAnyRole(['admin', 'editor',]);
     }
 
     /**

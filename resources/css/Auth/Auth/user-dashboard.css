@@ -25,6 +25,7 @@
 @import "../../modules/alerts/alert.css";
 @import "../../modules/links/link.css";
 @import "../../modules/documents/aside.css";
+@import "../../modules/tooltips/datahint.css";
 @import "./user-dashboard-nav.css";
 
 /*

@@ -72,6 +72,7 @@
 */
 @import "../../modules/links/link.css";
 @import "../../modules/buttons/button.css";
+@import "../../modules/tooltips/datahint.css";
 
 /*
  =============================================================================

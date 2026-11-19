@@ -7,6 +7,7 @@
 @import "../../modules/buttons/button.css";
 @import "../../modules/alerts/alert.css";
 @import "../../modules/links/link.css";
+@import "../../modules/tooltips/datahint.css";
 
 .link-margin-top {
     margin-top: 1rem;

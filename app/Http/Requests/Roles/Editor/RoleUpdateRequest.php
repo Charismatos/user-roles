@@ -20,7 +20,7 @@ class RoleUpdateRequest extends FormRequest
     {
         $user = $this->user();
 
-        return $user->hasAnyRole(['administrator', 'Analyst', 'Researcher']);
+        return $user->hasAnyRole(['admin', 'editor',]);
     }
 
     /**

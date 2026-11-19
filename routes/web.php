@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\Auth\Guest\HomeController;
-use App\Http\Controllers\Auth\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\Auth\ProfileSetupController;
-use App\Http\Controllers\Auth\Auth\UserController;
-use App\Http\Controllers\Auth\Auth\UserDashboardController;
-use App\Http\Controllers\Auth\Guest\RegisterUserController;
-use App\Http\Controllers\Roles\Editor\RoleController;
-use App\Http\Controllers\Roles\Editor\RoleManagementController;
+use App\Http\Controllers\Web\Auth\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Web\Auth\Auth\ProfileSetupController;
+use App\Http\Controllers\Web\Auth\Auth\UserController;
+use App\Http\Controllers\Web\Auth\Auth\UserDashboardController;
+use App\Http\Controllers\Web\Auth\Guest\HomeController;
+use App\Http\Controllers\Web\Auth\Guest\RegisterUserController;
+use App\Http\Controllers\Web\Categories\Editor\CategoryController;
+use App\Http\Controllers\Web\Geographies\Editor\GeographyController;
+use App\Http\Controllers\Web\Roles\Editor\RoleController;
+use App\Http\Controllers\Web\Roles\Editor\RoleManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,17 +80,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{user}/roles', [RoleManagementController::class, 'assignedShow'])->name('users.roles.show');
     Route::match(['put', 'patch'], '/users/{user}/roles', [RoleManagementController::class, 'updateRolesAssigned'])->name('users.roles.update');
 
+
     // 2. System Roles CRUD & Specialized Filters
     // (Static paths MUST be placed BEFORE wildcards like {role:slug})
+    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
     Route::get('/roles/by-level/create', [RoleManagementController::class, 'rolesByLevelCreate'])->name('roles.by-level.create');
     Route::get('/users/{user}/roles/by-level/update', [RoleManagementController::class, 'rolesByLevelUpdate'])->name('roles.by-level.update');
-    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
-    Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
+
+
 
     // 3. System Roles Wildcard Management (Using slug binding)
     Route::get('roles/{role}', [RoleController::class, 'show'])->name('roles.show');
     Route::get('roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::match(['put', 'patch'], 'roles/{role}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+
+
+    // 4. Grouping Taxonomy
+    Route::get('categories/modify', [CategoryController::class, 'index'])->name('groupings.categories.modify');
+    Route::get('geographies/modify', [GeographyController::class, 'index'])->name('groupings.geographies.modify');
 });

@@ -36,16 +36,20 @@
 
             <nav>
                 {{-- Only show to users who possess the 'administrator' or 'super-administrator' role --}}
-                @if ($user->hasAnyRole(['administrator', 'analyst', 'researcher']))
+                @if ($user->hasAnyRole(['admin', 'editor']))
                     <x-links.link href="{{ route('roles.create') }}" label="Create User Roles"
                         class="pl-link pl-default" />
                     <x-links.link href="{{ route('users.roles.assign') }}" label="Assign User Roles"
                         class="pl-link pl-default" />
                     <x-links.link href="{{ route('users.roles.show', $user) }}" label="View Your Roles"
                         class="pl-link pl-default" />
+                    <x-links.link href="{{ route('groupings.categories.modify') }}" label="Modify Categories"
+                        class="pl-link pl-primary" />
+                    <x-links.link href="{{ route('groupings.geographies.modify') }}" label="Modify Geographies"
+                        class="pl-link pl-primary" />
                 @endif
 
-                @if ($user->hasAnyRole(['administrator']))
+                @if ($user->hasAnyRole(['admin']))
                     <x-links.link href="{{ route('roles.index') }}" label="View All Roles" class="pl-link pl-default" />
                     <x-links.link href="{{ route('roles.assigned.index') }}" label="View All Assigned Roles"
                         class="pl-link pl-default" />
@@ -57,6 +61,7 @@
 
                 {{-- Visible to all authenticated users --}}
                 <x-links.link href="{{ route('home') }}" label="Go To Home Page" class="pl-link pl-primary" />
+
 
             </nav>
         </aside>
