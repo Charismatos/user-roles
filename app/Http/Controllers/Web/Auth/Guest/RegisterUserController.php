@@ -33,6 +33,7 @@ class RegisterUserController extends Controller
 
         $userData = UserData::fromArray([
             'name' => $validatedData['name'],
+            'username' => $validatedData['username'] ?? null,
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
         ]);

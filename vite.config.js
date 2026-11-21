@@ -20,7 +20,8 @@ export default defineConfig({
         port: 5173,
         strictPort: true,
         hmr: {
-            host: "localhost",
+            // host: "localhost",
+            host: "laravel.test",
         },
         watch: {
             usePolling: true,
